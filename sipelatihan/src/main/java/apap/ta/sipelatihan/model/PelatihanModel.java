@@ -47,12 +47,12 @@ public class PelatihanModel implements Serializable {
     private LocalDate tanggal_selesai;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss-ns")
     @Column(name = "waktu_mulai", nullable = false)
     private LocalDateTime waktu_mulai;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss-ns")
     @Column(name = "waktu_selesai", nullable = false)
     private LocalDateTime waktu_selesai;
 
