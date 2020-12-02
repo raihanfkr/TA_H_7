@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>View All Pelatihan</title>
+<!--    <object th:include="fragments/fragment :: css" th:remove="tag"></object>-->
+<!--    <object th:include="fragments/fragment :: js" th:remove="tag"></object>-->
+</head>
+
+<body>
+<!--<nav th:replace="fragments/fragment :: navbar (current='View All Pelatihan')"></nav>-->
+<div class="container-fluid">
+    <h2>Daftar Seluruh Pelatihan</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Id Pelatihan</th>
+            <th>Nama Pelatihan</th>
+            <th>Tanggal Mulai</th>
+            <th>Tanggal Selesai</th>
+            <th>Nama Trainer</th>
+            <th>Jenis Pelatihan</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+                th:each="pelatihan, iterationStatus: ${listPelatihan}"
+        >
+            <td th:text="${iterationStatus.count}"></td>
+            <td th:text="${pelatihan.id}"></td>
+            <td th:text="${pelatihan.nama_pelatihan}"></td>
+            <td th:text="${pelatihan.tanggal_mulai}"></td>
+            <td th:text="${pelatihan.tanggal_selesai}"></td>
+            <td th:text="${pelatihan.trainer.nama_trainer}"></td>
+            <td th:if="${pelatihan.jenis_pelatihan.id == 1}">Onboarding</td>
+            <td th:if="${pelatihan.jenis_pelatihan.id == 2}">Workshop</td>
+            <td th:if="${pelatihan.jenis_pelatihan.id == 3}">Seminar</td>
+            <td th:if="${pelatihan.jenis_pelatihan.id == 4}">BootCamp</td>
+            <td th:if="${pelatihan.jenis_pelatihan.id == 5}">Diklat</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

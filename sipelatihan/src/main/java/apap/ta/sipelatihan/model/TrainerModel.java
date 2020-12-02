@@ -21,8 +21,8 @@ public class TrainerModel implements Serializable {
 
     @NotNull
     @Size(max = 16)
-    @Column(name = "no_ktp", nullable = false)
-    private String no_ktp;
+    @Column(name = "noKtp", nullable = false)
+    private String noKtp;
 
     @NotNull
     @Size(max = 200)
@@ -50,12 +50,12 @@ public class TrainerModel implements Serializable {
         this.id = id;
     }
 
-    public String getNo_ktp() {
-        return no_ktp;
+    public String getNoKtp() {
+        return noKtp;
     }
 
-    public void setNo_ktp(String no_ktp) {
-        this.no_ktp = no_ktp;
+    public void setNoKtp(String noKtp) {
+        this.noKtp = noKtp;
     }
 
     public String getNama_trainer() {
