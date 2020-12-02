@@ -12,7 +12,7 @@
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -89,7 +89,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" th:href="@{/logout}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -106,12 +106,12 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Selamat datang, Admin!</h1>
+                        <h1 class="h3 mb-0 text-gray-800" th:text="'Selamat datang, '+ ${#httpServletRequest.remoteUser}+'!'"></h1>
                     </div>
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Selamat Datang di Sistem Informasi Tata Usaha</h6>
+                            <h6 class="m-0 font-weight-bold text-dark">Selamat Datang di Sistem Informasi Tata Usaha</h6>
                         </div>
                         <div class="card-body">
                             <p> SI-PELATIHAN adalah sistem informasi untuk mengelola pelatihan karyawan pada PT Samsan Tech Sejahtera </p>
@@ -122,7 +122,7 @@
                         <div class="col">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Tambah User Baru</h6>
+                                    <h6 class="m-0 font-weight-bold text-dark">Tambah User Baru</h6>
                                 </div>
                                 <div class="card-body">
                                     <form action="/user/addUser" method="POST">
@@ -144,7 +144,7 @@
                                             <option value="7">Pelamar</option>
                                         </select>
                                         <br>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-dark">Submit</button>
                                     </form>
                                 </div>
                             </div>
