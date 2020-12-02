@@ -38,7 +38,7 @@ public class TrainerController {
         try{
             String exist_ktp =trainerService.checkTrainer(noKtp).getNoKtp();
             if (noKtp.equals(exist_ktp)){
-                model.addAttribute("msg", "Trainer sudah terdaftar di Database!");
+                model.addAttribute("msg", "Penambahan Trainer gagal, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
             }
         } catch (NoSuchElementException e){
             trainerService.addTrainer(trainer);
