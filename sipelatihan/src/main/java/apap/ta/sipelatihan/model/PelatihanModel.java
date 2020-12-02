@@ -20,7 +20,7 @@ import java.util.List;
 public class PelatihanModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pelatihan;
+    private Integer id;
 
     @NotNull
     @Size(max = 50)
@@ -87,12 +87,12 @@ public class PelatihanModel implements Serializable {
     @OneToMany(mappedBy = "pelatihan", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PesertaPelatihanModel> listPesertaPelatihan;
 
-    public Integer getId_pelatihan() {
-        return id_pelatihan;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_pelatihan(Integer id_pelatihan) {
-        this.id_pelatihan = id_pelatihan;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNama_pelatihan() {
