@@ -1,4 +1,10 @@
-H7 - SIPELATIHAN
+**H7 - SIPELATIHAN**
+
+Anggota kelompok:
+- Khansa Khairunisa Putri (1806185424)
+- Muhammad Fiqri Adrian (1806190973)
+- Muhamad Raihan Fikriansyah (1806185430)
+- Rania Azzahra (1806185475)
 
 Laporan Progress 1 Tugas Akhir:
 
