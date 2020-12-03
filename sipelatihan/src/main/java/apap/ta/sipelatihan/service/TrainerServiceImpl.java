@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class TrainerServiceImpl implements TrainerService{
+public class TrainerServiceImpl implements TrainerService {
     @Autowired
     TrainerDb trainerDb;
 
     @Override
-    public void addTrainer(TrainerModel trainer){
+    public void addTrainer(TrainerModel trainer) {
         trainerDb.save(trainer);
     }
 
@@ -42,3 +42,4 @@ public class TrainerServiceImpl implements TrainerService{
         return trainerDb.findTrainerModelById(id);
     }
 }
+
