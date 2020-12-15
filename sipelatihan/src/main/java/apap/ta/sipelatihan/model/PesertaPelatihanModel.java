@@ -22,7 +22,7 @@ public class PesertaPelatihanModel implements Serializable {
     private String no_peserta;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_pelatihan", referencedColumnName = "id_pelatihan")
+    @JoinColumn(name = "id_pelatihan", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private PelatihanModel pelatihan;
