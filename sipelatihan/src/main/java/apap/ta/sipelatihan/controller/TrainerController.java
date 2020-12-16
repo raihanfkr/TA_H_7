@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Controller
 public class TrainerController {
-//    @Qualifier("trainerServiceImpl")
+    //    @Qualifier("trainerServiceImpl")
     @Autowired
     private TrainerService trainerService;
 
@@ -32,8 +32,8 @@ public class TrainerController {
 
     @RequestMapping(value = "/trainer/add", method = RequestMethod.POST)
     public String addTrainerSubmit(@RequestParam String noKtp,
-            @ModelAttribute TrainerModel trainer,
-            Model model
+                                   @ModelAttribute TrainerModel trainer,
+                                   Model model
     ) {
         try{
             String exist_ktp =trainerService.checkTrainer(noKtp).getNoKtp();

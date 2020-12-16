@@ -41,5 +41,9 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerModel getTrainerById(Integer id) {
         return trainerDb.findTrainerModelById(id);
     }
-}
 
+    @Override
+    public List<TrainerModel> getTrainerList() {
+        return trainerDb.findAll();
+    }
+}

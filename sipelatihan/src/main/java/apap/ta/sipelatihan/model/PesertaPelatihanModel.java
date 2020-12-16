@@ -19,7 +19,7 @@ public class PesertaPelatihanModel implements Serializable {
     @NotNull
     @Size(max = 200)
     @Column(name = "no_peserta", nullable = false)
-    private String no_peserta;
+    private Long no_peserta;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pelatihan", referencedColumnName = "id")
@@ -28,16 +28,16 @@ public class PesertaPelatihanModel implements Serializable {
     private PelatihanModel pelatihan;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_peserta", referencedColumnName = "id_peserta")
+    @JoinColumn(name = "id_peserta", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private PesertaModel peserta;
 
-    public String getNo_peserta() {
+    public Long getNo_peserta() {
         return no_peserta;
     }
 
-    public void setNo_peserta(String no_peserta) {
+    public void setNo_peserta(Long no_peserta) {
         this.no_peserta = no_peserta;
     }
 

@@ -20,6 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
 //                .antMatchers("/resep/**").hasAnyAuthority("APOTEKER")
 //                .antMatchers("/obat/**").hasAnyAuthority("APOTEKER")
                 .anyRequest().authenticated()
@@ -27,7 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll()
+                .and().cors().and().csrf().disable();
     }
     @Bean
     public BCryptPasswordEncoder encoder(){
