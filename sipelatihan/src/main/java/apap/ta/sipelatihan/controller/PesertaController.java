@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -17,14 +20,13 @@ public class PesertaController {
     @Autowired
     private PesertaService pesertaService;
 
-
-    @GetMapping("/add")
+    @GetMapping("/tambah")
     private String addPesertaForm(Model model){
         model.addAttribute("peserta", new PesertaModel());
         return "form-add-peserta";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/tambah")
     private String addPesertaSubmit(
             @ModelAttribute PesertaModel peserta,
             RedirectAttributes attributes){

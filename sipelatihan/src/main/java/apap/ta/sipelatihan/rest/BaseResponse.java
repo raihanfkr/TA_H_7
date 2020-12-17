@@ -6,6 +6,7 @@ public class BaseResponse<Test>{
     private int status;
     private String message;
     private Test result;
+//    private PegawaiDTO results;
 
     /**
      * @return the status
@@ -23,6 +24,8 @@ public class BaseResponse<Test>{
      * @return the result
      */
     public Test getResult() {
+
+//    public PegawaiDTO getResults() {
         return result;
     }
 
@@ -45,3 +48,8 @@ public class BaseResponse<Test>{
         this.result = result;
     }
 }
+//=======
+//    public void setResult(PegawaiDTO result) {
+//        this.result = result;
+//    }
+//}

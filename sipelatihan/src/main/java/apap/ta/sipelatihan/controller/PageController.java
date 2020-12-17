@@ -22,4 +22,3 @@ public class PageController {
         return "login";
     }
 }
-
