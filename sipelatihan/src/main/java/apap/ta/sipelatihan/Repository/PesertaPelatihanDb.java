@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PesertaPelatihanDb extends JpaRepository<PesertaPelatihanModel, Long> {
+public interface PesertaPelatihanDb extends JpaRepository<PesertaPelatihanModel, Integer> {
 
 }
