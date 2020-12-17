@@ -58,7 +58,7 @@ public class UserController {
         UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
         RoleModel role = roleService.findRoleById(user.getRole().getId_role());
         try {
-            BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+            BaseResponse<PegawaiDTO> baseResponse = userRestService.getPegawai(user.getUsername());
             PegawaiDTO pegawai = baseResponse.getResult();
             model.addAttribute("isPegawai", true);
             model.addAttribute("pegawai", pegawai);

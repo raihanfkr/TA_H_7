@@ -2,10 +2,11 @@ package apap.ta.sipelatihan.rest;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BaseResponse{
+public class BaseResponse<Test>{
     private int status;
     private String message;
-    private PegawaiDTO result;
+    private Test result;
+//    private PegawaiDTO results;
 
     /**
      * @return the status
@@ -22,7 +23,9 @@ public class BaseResponse{
     /**
      * @return the result
      */
-    public PegawaiDTO getResult() {
+    public Test getResult() {
+
+//    public PegawaiDTO getResults() {
         return result;
     }
 
@@ -41,7 +44,12 @@ public class BaseResponse{
     /**
      * @param result the result to set
      */
-    public void setResult(PegawaiDTO result) {
+    public void setResult(Test result) {
         this.result = result;
     }
 }
+//=======
+//    public void setResult(PegawaiDTO result) {
+//        this.result = result;
+//    }
+//}
