@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Tambah Peserta</title>
+</head>
+<body>
+    <h3>Tambah Peserta</h3>
+    <form th:action="@{/peserta/add}" th:object="${peserta}" method="POST">
+        Nama:<br>
+        <input type="text" name="nama_peserta"/>
+        <br>
+        Nomor Telepon:<br>
+        <input type="text" name="no_telepon"/>
+        <br>
+        Alamat:<br>
+        <input type="text" name="alamat"/>
+        <br>
+        Departemen:<br>
+        <select name="departemen">
+            <option value="HR">HR</option>
+            <option value="Engineer">Engineer</option>
+            <option value="Finance">Finance</option>
+            <option value="Sales">Sales</option>
+            <option value="Operational">Operational</option>
+        </select>
+        <br>
+        <br>
+        <button type="submit" value="Submit" class="btn btn-success">Submit</button>
+    </form>
+</body>
+</html>
