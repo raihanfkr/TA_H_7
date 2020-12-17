@@ -18,7 +18,7 @@ public class PesertaModel implements Serializable {
     @NotNull
     @Size(max = 100)
     @Column(name = "nama_peserta", nullable = false)
-    private String nama_peserta;
+    private String nama;
 
     @NotNull
     @Size(max = 20)
@@ -46,12 +46,12 @@ public class PesertaModel implements Serializable {
         this.id = id;
     }
 
-    public String getNama_peserta() {
-        return nama_peserta;
+    public String getNama() {
+        return nama;
     }
 
-    public void setNama_peserta(String nama_peserta) {
-        this.nama_peserta = nama_peserta;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
     public String getNo_telepon() {

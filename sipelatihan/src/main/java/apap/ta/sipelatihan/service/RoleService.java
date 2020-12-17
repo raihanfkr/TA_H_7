@@ -7,4 +7,5 @@ import java.util.List;
 public interface RoleService {
     RoleModel addRole(RoleModel role);
     List<RoleModel> findAll();
+    RoleModel findRoleById(Long id);
 }

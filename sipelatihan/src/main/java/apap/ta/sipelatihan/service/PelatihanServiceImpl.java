@@ -20,4 +20,14 @@ public class PelatihanServiceImpl implements PelatihanService{
         return pelatihanDb.findAllByOrderById();
     }
 
+    @Override
+    public PelatihanModel getPelatihanById(Integer id) {
+        return pelatihanDb.findById(id).get();
+    }
+
+    @Override
+    public void addPelatihan(PelatihanModel pelatihan) {
+        pelatihanDb.save(pelatihan);
+    }
+
 }

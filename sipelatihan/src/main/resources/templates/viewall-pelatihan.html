@@ -125,6 +125,7 @@
                                         <th>Tanggal Selesai</th>
                                         <th>Nama Trainer</th>
                                         <th>Jenis Pelatihan</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -142,6 +143,9 @@
                                         <td th:if="${pelatihan.jenis_pelatihan.id == 3}">Seminar</td>
                                         <td th:if="${pelatihan.jenis_pelatihan.id == 4}">BootCamp</td>
                                         <td th:if="${pelatihan.jenis_pelatihan.id == 5}">Diklat</td>
+                                        <td>
+                                            <a th:href="@{/pelatihan/detail/} + ${pelatihan.id}" class="btn btn-primary" style="color:white">Lihat</a>
+                                        <td>
                                     </tr>
                                     </tbody>
                                 </table>

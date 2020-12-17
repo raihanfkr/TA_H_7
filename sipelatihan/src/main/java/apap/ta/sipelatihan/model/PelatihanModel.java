@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -37,28 +38,32 @@ public class PelatihanModel implements Serializable {
     private Integer kapasitas;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "tanggal_mulai", nullable = false)
-    private LocalDate tanggal_mulai;
+    private Date tanggal_mulai;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "tanggal_selesai", nullable = false)
-    private LocalDate tanggal_selesai;
+    private Date tanggal_selesai;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss-ns")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "HH:mm")
     @Column(name = "waktu_mulai", nullable = false)
-    private LocalDateTime waktu_mulai;
+    private Date waktu_mulai;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss-ns")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "HH:mm")
     @Column(name = "waktu_selesai", nullable = false)
-    private LocalDateTime waktu_selesai;
+    private Date waktu_selesai;
 
     @NotNull
     @Column(name = "status_persetujuan", nullable = false)
-    private Integer status_persetujuan;
+    private Integer status_persetujuan = 0;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_trainer", referencedColumnName = "id")
@@ -119,35 +124,35 @@ public class PelatihanModel implements Serializable {
         this.kapasitas = kapasitas;
     }
 
-    public LocalDate getTanggal_mulai() {
+    public Date getTanggal_mulai() {
         return tanggal_mulai;
     }
 
-    public void setTanggal_mulai(LocalDate tanggal_mulai) {
+    public void setTanggal_mulai(Date tanggal_mulai) {
         this.tanggal_mulai = tanggal_mulai;
     }
 
-    public LocalDate getTanggal_selesai() {
+    public Date getTanggal_selesai() {
         return tanggal_selesai;
     }
 
-    public void setTanggal_selesai(LocalDate tanggal_selesai) {
+    public void setTanggal_selesai(Date tanggal_selesai) {
         this.tanggal_selesai = tanggal_selesai;
     }
 
-    public LocalDateTime getWaktu_mulai() {
+    public Date getWaktu_mulai() {
         return waktu_mulai;
     }
 
-    public void setWaktu_mulai(LocalDateTime waktu_mulai) {
+    public void setWaktu_mulai(Date waktu_mulai) {
         this.waktu_mulai = waktu_mulai;
     }
 
-    public LocalDateTime getWaktu_selesai() {
+    public Date getWaktu_selesai() {
         return waktu_selesai;
     }
 
-    public void setWaktu_selesai(LocalDateTime waktu_selesai) {
+    public void setWaktu_selesai(Date waktu_selesai) {
         this.waktu_selesai = waktu_selesai;
     }
 
