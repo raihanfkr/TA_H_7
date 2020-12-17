@@ -1,14 +1,12 @@
 package apap.ta.sipelatihan.controller;
 
 import apap.ta.sipelatihan.model.PelatihanModel;
+import apap.ta.sipelatihan.model.PesertaModel;
 import apap.ta.sipelatihan.model.PesertaPelatihanModel;
 import apap.ta.sipelatihan.model.UserModel;
-import apap.ta.sipelatihan.service.JenisPelatihanService;
-import apap.ta.sipelatihan.service.TrainerService;
-import apap.ta.sipelatihan.service.UserService;
+import apap.ta.sipelatihan.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
-import apap.ta.sipelatihan.service.PelatihanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +23,16 @@ public class PelatihanController {
     private JenisPelatihanService jenisPelatihanService;
 
     @Autowired
+    private PesertaPelatihanService pesertaPelatihanService;
+
+    @Autowired
     private TrainerService trainerService;
 
     @Autowired
     private UserService userService;
-//
-//    @Autowired
-//    private PesertaService pesertaService;
+
+    @Autowired
+    private PesertaService pesertaService;
 
     @GetMapping("/viewall")
     public String listPelatihan(Model model) {
@@ -40,30 +41,6 @@ public class PelatihanController {
         model.addAttribute("listPelatihan", listPelatihan);
 
         return "viewall-pelatihan";
-    }
-
-    @GetMapping("/view/{id}")
-    public String viewDetailPelatihan(
-            @PathVariable Integer id, Model model) {
-
-        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
-        List<PesertaPelatihanModel> listPeserta = pelatihan.getListPesertaPelatihan();
-        if (!(listPeserta.isEmpty())){
-            model.addAttribute("title", "Daftar Peserta");
-            model.addAttribute("status", true);
-
-
-        }else{
-            model.addAttribute("status", false);
-
-        }
-        model.addAttribute("pelatihan", pelatihan);
-        model.addAttribute("listPeserta", listPeserta);
-
-
-        return "/pelatihan/view-pelatihan";
-
-
     }
 
     @GetMapping("/add")
@@ -94,7 +71,50 @@ public class PelatihanController {
                 pelatihanService.addPelatihan(pelatihan);
             }
         }
-        return "viewall-pelatihan";
+        return "add-pelatihan";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String viewDetailPelatihan(
+            @PathVariable(value = "id") Integer id,
+            Model model) {
+        if (id == null) {
+            return "error-page";
+        }
+        else{
+            PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
+            PesertaModel peserta = pesertaService.getPesertaByID(id);
+            List<PesertaModel> listPeserta = pesertaService.getListPeserta();
+            if (!(listPeserta.isEmpty())){
+                model.addAttribute("title", "Daftar Peserta");
+                model.addAttribute("status", true);
+            }else{
+                model.addAttribute("status", false);
+            }
+            System.out.println(pesertaService.getPesertaByID(id).getNama());
+
+            model.addAttribute("peserta_pelatihan", new PesertaPelatihanModel());
+            model.addAttribute("pelatihan", pelatihan);
+            model.addAttribute("listPeserta", listPeserta);
+            model.addAttribute("listPesertaPelatihan", pelatihan.getListPesertaPelatihan());
+            return "view-pelatihan";
+        }
+    }
+
+    @PostMapping("/{id}/tambah-peserta")
+    private String addPesertaPelatihanFormSubmit(
+            @PathVariable(value="id") Integer id,
+            @ModelAttribute PesertaPelatihanModel peserta_pelatihan,
+            Integer pesertaId,
+            Model model){
+
+        String no_peserta = String.valueOf(pesertaId);
+        peserta_pelatihan.setNo_peserta(no_peserta);
+        peserta_pelatihan.setPeserta(pesertaService.getPesertaByID(pesertaId));
+        peserta_pelatihan.setPelatihan(pelatihanService.getPelatihanById(id));
+        pesertaPelatihanService.addPesertaPelatihan(peserta_pelatihan);
+
+        return "add-peserta-pelatihan";
     }
 }
 

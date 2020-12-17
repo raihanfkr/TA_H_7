@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,4 +20,15 @@ public class PesertaServiceImpl implements PesertaService {
     public void addPeserta(PesertaModel peserta) {
         pesertaDb.save(peserta);
     }
+
+    @Override
+    public List<PesertaModel> getListPeserta() {
+        return pesertaDb.findAll();
+    }
+
+    @Override
+    public PesertaModel getPesertaByID(Integer id) {
+        return pesertaDb.findById(id).get();
+    }
+
 }

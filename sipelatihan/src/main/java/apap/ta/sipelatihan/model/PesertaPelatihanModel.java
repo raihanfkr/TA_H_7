@@ -16,10 +16,12 @@ import java.util.List;
 @Table(name="peserta_pelatihan")
 public class PesertaPelatihanModel implements Serializable {
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Size(max = 200)
     @Column(name = "no_peserta", nullable = false)
-    private Long no_peserta;
+    private String no_peserta;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pelatihan", referencedColumnName = "id")
@@ -33,11 +35,19 @@ public class PesertaPelatihanModel implements Serializable {
     @JsonIgnore
     private PesertaModel peserta;
 
-    public Long getNo_peserta() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNo_peserta() {
         return no_peserta;
     }
 
-    public void setNo_peserta(Long no_peserta) {
+    public void setNo_peserta(String no_peserta) {
         this.no_peserta = no_peserta;
     }
 
