@@ -74,15 +74,16 @@ public class PelatihanModel implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "uuid_penyetuju", referencedColumnName = "uuid", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
     private UserModel userPenyetuju;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "uuid_pengaju", referencedColumnName = "uuid")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JoinColumn(name = "uuid_pengaju", referencedColumnName = "uuid", nullable = true)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
     private UserModel userPengaju;
+
 
     @OneToMany(mappedBy = "pelatihan", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PesertaPelatihanModel> listPesertaPelatihan;
