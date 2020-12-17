@@ -2,6 +2,7 @@ package apap.ta.sipelatihan.restcontroller;
 
 import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.PesertaPelatihanModel;
+import apap.ta.sipelatihan.rest.BaseResponse;
 import apap.ta.sipelatihan.service.PelatihanService;
 import apap.ta.sipelatihan.service.PesertaPelatihanRestService;
 
@@ -24,14 +25,13 @@ public class PesertaPelatihanRestController {
     private PelatihanService pelatihanService;
 
     @GetMapping(value = "/peserta-pelatihan/{nama_peserta}")
-    private List<Map<String,Object>> retrievePesertaPelatihan(
+    private BaseResponse<List<Map<String,Object>>> retrievePesertaPelatihan(
             @PathVariable(value = "nama_peserta") String nama_peserta){
-        return pesertaPelatihanRestService.retrieveListPesertaPelatihan(nama_peserta);
+        BaseResponse<List<Map<String,Object>>> baseResponse = new BaseResponse<>();
+        List<Map<String,Object>> listPesertaPelatihan = pesertaPelatihanRestService.retrieveListPesertaPelatihan(nama_peserta);
+        baseResponse.setStatus(200);
+        baseResponse.setMessage("success");
+        baseResponse.setResult(listPesertaPelatihan);
+        return baseResponse;
     }
-//        List<PesertaPelatihanModel> p = ;
-//        List<PelatihanModel> pelatihan = pelatihanService.getPelatihanList();
-//        List<PelatihanModel> p = pelatihanService.getPelatihanList();
-//        PelatihanModel pelatihan = pelatihanService.getPelatihanById(pelatihan);
-//        return pelatihanM
-//        return pesertaPelatihanRestService.retrieveListPesertaPelatihan();
 }

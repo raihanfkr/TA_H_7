@@ -38,6 +38,7 @@ public class PelatihanController {
     public String listPelatihan(Model model) {
         List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanList();
         System.out.println(pelatihanService.getPelatihanList());
+        System.out.println(pelatihanService.getPelatihanById(1).getTrainer().getNama_trainer());
         model.addAttribute("listPelatihan", listPelatihan);
 
         return "viewall-pelatihan";
@@ -58,12 +59,12 @@ public class PelatihanController {
                                      Model model
     ) {
         if (pelatihan.getTanggal_mulai().after(pelatihan.getTanggal_selesai())) {
-            return "add-trainer";
+            return "add-pelatihan";
         }
         else {
             if(pelatihan.getWaktu_mulai().after(pelatihan.getWaktu_selesai()) || pelatihan.getWaktu_mulai()
                     .equals(pelatihan.getWaktu_selesai())) {
-                return "add-trainer";
+                return "add-pelatihan";
             }
             else {
                 UserModel pengaju = userService.findUser(auth.getName());
@@ -71,7 +72,7 @@ public class PelatihanController {
                 pelatihanService.addPelatihan(pelatihan);
             }
         }
-        return "add-pelatihan";
+        return "redirect:/viewall";
     }
 
     @GetMapping("/detail/{id}")
@@ -83,21 +84,19 @@ public class PelatihanController {
         }
         else{
             PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
-            PesertaModel peserta = pesertaService.getPesertaByID(id);
             List<PesertaModel> listPeserta = pesertaService.getListPeserta();
-            if (!(listPeserta.isEmpty())){
-                model.addAttribute("title", "Daftar Peserta");
-                model.addAttribute("status", true);
-            }else{
-                model.addAttribute("status", false);
-            }
-            System.out.println(pesertaService.getPesertaByID(id).getNama());
-
+            model.addAttribute("status", false);
             model.addAttribute("peserta_pelatihan", new PesertaPelatihanModel());
             model.addAttribute("pelatihan", pelatihan);
             model.addAttribute("listPeserta", listPeserta);
             model.addAttribute("listPesertaPelatihan", pelatihan.getListPesertaPelatihan());
-            return "view-pelatihan";
+            if (!(listPeserta.isEmpty())){
+                model.addAttribute("title", "Daftar Peserta");
+                model.addAttribute("status", true);
+                return "view-pelatihan";
+            }else{
+                return "view-pelatihan";
+            }
         }
     }
 

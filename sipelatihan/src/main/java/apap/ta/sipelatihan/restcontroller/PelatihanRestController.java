@@ -1,6 +1,7 @@
 package apap.ta.sipelatihan.restcontroller;
 
 import apap.ta.sipelatihan.model.PelatihanModel;
+import apap.ta.sipelatihan.rest.BaseResponse;
 import apap.ta.sipelatihan.service.PelatihanRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,16 +21,22 @@ public class PelatihanRestController {
     private PelatihanRestService pelatihanRestService;
 
     @PostMapping("/pelatihan")
-    private PelatihanModel createPelatihan(@Valid @RequestBody PelatihanModel pelatihan,
-                                           BindingResult bindingResult
+    private BaseResponse<PelatihanModel> createPelatihan(
+            @Valid @RequestBody PelatihanModel pelatihan,
+            BindingResult bindingResult
     ) {
+        BaseResponse<PelatihanModel> baseResponse = new BaseResponse<PelatihanModel>();
         if (bindingResult.hasFieldErrors()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field"
             );
         }
         else {
-            return pelatihanRestService.createPelatihan(pelatihan);
+            pelatihanRestService.createPelatihan(pelatihan);
+            baseResponse.setStatus(200);
+            baseResponse.setMessage("success");
+            baseResponse.setResult(pelatihan);
+            return baseResponse;
         }
     }
 }
