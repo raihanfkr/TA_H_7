@@ -1,6 +1,7 @@
 package apap.ta.sipelatihan.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,10 +19,15 @@ public class UserModel implements Serializable {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Integer uuid;
+//    @Id
+//    @NotNull
+//    @Size(max = 200)
+//    @Column(name = "uuid", nullable = false)
+//    private String uuid;
+
     @Id
-    @NotNull
-    @Size(max = 200)
-    @Column(name = "uuid", nullable = false)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String uuid;
 
     @NotNull

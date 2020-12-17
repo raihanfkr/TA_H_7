@@ -13,7 +13,7 @@ import java.util.List;
 public class PesertaModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_peserta;
+    private Integer id;
 
     @NotNull
     @Size(max = 100)
