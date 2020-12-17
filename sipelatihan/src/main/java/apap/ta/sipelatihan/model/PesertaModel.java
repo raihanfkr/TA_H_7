@@ -38,12 +38,12 @@ public class PesertaModel implements Serializable {
     @OneToMany(mappedBy = "peserta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PesertaPelatihanModel> listPesertaPelatihan;
 
-    public Integer getId_peserta() {
-        return id_peserta;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_peserta(Integer id_peserta) {
-        this.id_peserta = id_peserta;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNama_peserta() {

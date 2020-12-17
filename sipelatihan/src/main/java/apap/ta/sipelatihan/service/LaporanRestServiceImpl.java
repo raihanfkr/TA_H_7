@@ -19,7 +19,7 @@ public class LaporanRestServiceImpl implements LaporanRestService {
 
     @Override
     public String postLaporan(LaporanDetail laporan) {
-        return this.webClient.post().uri("/api/v1/laporan")
+        return this.webClient.post().uri("/peserta/laporan")
                 .header("Content-Type", "application/json")
                 .syncBody(laporan)
                 .retrieve()
