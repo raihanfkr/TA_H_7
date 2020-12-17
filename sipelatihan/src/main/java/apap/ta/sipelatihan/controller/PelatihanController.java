@@ -116,4 +116,3 @@ public class PelatihanController {
         return "add-peserta-pelatihan";
     }
 }
-

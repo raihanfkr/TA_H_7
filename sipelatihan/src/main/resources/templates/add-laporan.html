@@ -11,7 +11,7 @@
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
-    <title>Tambah Peserta</title>
+    <title>Laporan Detail</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -23,10 +23,12 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
-<body id="page-top">
+
+<body>
+<!-- Page Wrapper -->
 <div id="wrapper">
 
-    <ul th:replace="fragments/fragment :: navbar('Tambah Peserta')"></ul>
+    <ul th:replace="fragments/fragment :: navbar('Add Trainer')"></ul>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -102,38 +104,17 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Tambah Peserta Baru</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Laporan Detail</h1>
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Form Tambah Peserta</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Laporan Detail</h6>
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/peserta/tambah}" th:object="${peserta}" method="POST">
-                                    Nama:<br>
-                                    <input type="text" name="nama_peserta"/>
-                                    <br>
-                                    Nomor Telepon:<br>
-                                    <input type="text" name="no_telepon"/>
-                                    <br>
-                                    Alamat:<br>
-                                    <input type="text" name="alamat"/>
-                                    <br>
-                                    Departemen:<br>
-                                    <select name="departemen">
-                                        <option value="HR">HR</option>
-                                        <option value="Engineer">Engineer</option>
-                                        <option value="Finance">Finance</option>
-                                        <option value="Sales">Sales</option>
-                                        <option value="Operational">Operational</option>
-                                    </select>
-                                    <br>
-                                    <br>
-                                    <button type="submit" value="Submit" class="btn btn-success">Submit</button>
-                                </form>
+                                <h2 th:text="'Peserta pelatihan dengan nama ' + ${username} + ' mengikuti sebanyak ' +${jumlahTraining} + ' training'"></h2>
                             </div>
                         </div>
                     </div>
@@ -142,6 +123,7 @@
             </div>
         </div>
         <!-- End of Main Content -->
+
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
@@ -177,7 +159,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+                <a class="btn btn-primary" href="login.html">Logout</a>
             </div>
         </div>
     </div>
@@ -199,6 +181,5 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
-
 </body>
 </html>

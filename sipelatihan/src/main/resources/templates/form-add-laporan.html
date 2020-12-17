@@ -12,7 +12,7 @@
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
-    <title>Daftar Pelatihan</title>
+    <title>Laporan Detail</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -105,50 +105,25 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Laporan Detail</h1>
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Viewall Pelatihan</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Tambah Laporan Detail</h6>
                             </div>
                             <div class="card-body">
-                                <h2>Daftar Seluruh Pelatihan</h2>
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Id Pelatihan</th>
-                                        <th>Nama Pelatihan</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Tanggal Selesai</th>
-                                        <th>Nama Trainer</th>
-                                        <th>Jenis Pelatihan</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr
-                                            th:each="pelatihan, iterationStatus: ${listPelatihan}"
-                                    >
-                                        <td th:text="${iterationStatus.count}"></td>
-                                        <td th:text="${pelatihan.id}"></td>
-                                        <td th:text="${pelatihan.nama_pelatihan}"></td>
-                                        <td th:text="${pelatihan.tanggal_mulai}"></td>
-                                        <td th:text="${pelatihan.tanggal_selesai}"></td>
-                                        <td th:text="${pelatihan.trainer.nama_trainer}"></td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 1}">Onboarding</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 2}">Workshop</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 3}">Seminar</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 4}">BootCamp</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 5}">Diklat</td>
-                                        <td>
-                                            <a th:href="@{/pelatihan/detail/} + ${pelatihan.id}" class="btn btn-primary" style="color:white">Lihat</a>
-                                        <td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <form th:action="@{/peserta/laporan}" th:object="${laporan}" method="POST">
+                                    Username :<br />
+                                    <input type="text" name="username" />
+                                    <br /><br />
+                                    Jumlah Training :<br />
+                                    <input type="text" name="jumlahTraining" />
+                                    <br /><br />
+                                    <button type="submit" value="Submit">Submit</button>
+                                </form>
                             </div>
                         </div>
                     </div>

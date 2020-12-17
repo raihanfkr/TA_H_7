@@ -19,6 +19,12 @@ public class UserModel implements Serializable {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Integer uuid;
+//    @Id
+//    @NotNull
+//    @Size(max = 200)
+//    @Column(name = "uuid", nullable = false)
+//    private String uuid;
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
