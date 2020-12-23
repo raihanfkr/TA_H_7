@@ -3,7 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <title>Ubah Pelatihan</title>
+=======
+    <title>Tambah Pelatihan</title>
+>>>>>>> 478cc3827d221f55f2adf4d7f46987e23f4ba038
     <object th:replace="fragments/fragment :: css"></object>
     <object th:replace="fragments/fragment :: js"></object>
 </head>
@@ -24,7 +28,11 @@
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
+<<<<<<< HEAD
                     <h1 class="h3 mb-0 text-gray-800" align="center">Ubah Pelatihan</h1>
+=======
+                    <h1 class="h3 mb-0 text-gray-800" align="center">Tambah Pelatihan</h1>
+>>>>>>> 478cc3827d221f55f2adf4d7f46987e23f4ba038
                 </div>
 
                 <div class="row">
@@ -33,13 +41,20 @@
                     <div class="col-xl-12 col-lg-12">
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
+<<<<<<< HEAD
                             <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-dark">Form Ubah Pelatihan</h6>
+=======
+                            <div
+                                    class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-dark">Form Tambah Pelatihan</h6>
+>>>>>>> 478cc3827d221f55f2adf4d7f46987e23f4ba038
                                 <h6 class="m-0 text-danger" th:text="${failed}"></h6>
                             </div>
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="p-3">
+<<<<<<< HEAD
                                     <form class="text-secondary" th:action="@{/pelatihan/ubah}" th:object="${pelatihan}" method="POST">
                                         <input type="hidden" th:field="*{id}"/>
                                         Nama Pelatihan<br>
@@ -58,11 +73,34 @@
                                         <input class="form-control mb-3 mt-1" type="time" name="waktu_selesai" th:field="*{waktu_selesai}" th:value="*{waktu_selesai}"/>
                                         Jenis Pelatihan<br>
                                         <select class="form-control mb-3 mt-1" name="jenis_pelatihan" th:field="*{jenis_pelatihan}" th:value="*{jenis_pelatihan}">
+=======
+                                    <form class="text-secondary" th:action="@{/pelatihan/add}" th:object="${pelatihan}" method="POST">
+                                        Nama Pelatihan<br>
+                                        <input class="form-control mb-3 mt-1" type="text" name="nama_pelatihan" th:field="*{nama_pelatihan}" required />
+                                        Deskripsi<br>
+                                        <textarea class="form-control mb-3 mt-1" name="deskripsi" th:field="*{deskripsi}" rows="3" required />
+                                        Kapasitas<br>
+                                        <input class="form-control mb-3 mt-1" type="text" name="kapasitas" th:field="*{kapasitas}" required />
+                                        Tanggal Mulai<br>
+                                        <input class="form-control mb-3 mt-1" type="date" name="tanggal_mulai" th:field="*{tanggal_mulai}" required />
+                                        Tanggal Selesai<br>
+                                        <input class="form-control mb-3 mt-1" type="date" name="tanggal_selesai" th:field="*{tanggal_selesai}" required />
+                                        Waktu Mulai (hh:mm)<br>
+                                        <input class="form-control mb-3 mt-1" type="time" name="waktu_mulai" th:field="*{waktu_mulai}" required />
+                                        Waktu Selesai (hh:mm)<br>
+                                        <input class="form-control mb-3 mt-1" type="time" name="waktu_selesai" th:field="*{waktu_selesai}" required />
+                                        Jenis Pelatihan<br>
+                                        <select class="form-control mb-3 mt-1" name="jenis_pelatihan" th:field="*{jenis_pelatihan}">
+>>>>>>> 478cc3827d221f55f2adf4d7f46987e23f4ba038
                                             <option value="0"> Pilih Pelatihan </option>
                                             <option th:each="jenis : ${listJenisPelatihan}" th:value="${jenis.id}" th:text="${jenis.nama}"></option>
                                         </select>
                                         Nama Pelatih<br>
+<<<<<<< HEAD
                                         <select class="form-control mb-3 mt-1" name="trainer" th:field="*{trainer}" th:value="*{trainer}">
+=======
+                                        <select class="form-control mb-3 mt-1" name="trainer" th:field="*{trainer}">
+>>>>>>> 478cc3827d221f55f2adf4d7f46987e23f4ba038
                                             <option value="0"> Pilih Pelatih </option>
                                             <option th:each="trainer : ${listTrainer}" th:value="${trainer.id}" th:text="${trainer.nama_trainer}"></option>
                                         </select>
