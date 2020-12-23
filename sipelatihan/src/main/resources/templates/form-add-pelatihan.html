@@ -33,8 +33,7 @@
                     <div class="col-xl-12 col-lg-12">
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
-                            <div
-                                    class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-dark">Form Tambah Pelatihan</h6>
                                 <h6 class="m-0 text-danger" th:text="${failed}"></h6>
                             </div>
@@ -43,19 +42,19 @@
                                 <div class="p-3">
                                     <form class="text-secondary" th:action="@{/pelatihan/add}" th:object="${pelatihan}" method="POST">
                                         Nama Pelatihan<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="nama_pelatihan" th:field="*{nama_pelatihan}" required />
+                                        <input class="form-control mb-3 mt-1" type="text" name="nama_pelatihan" th:field="*{nama_pelatihan}"/>
                                         Deskripsi<br>
-                                        <input class="form-control mb-3 mt-1" name="deskripsi" th:field="*{deskripsi}" rows="3" required />
+                                        <input class="form-control mb-3 mt-1" name="deskripsi" th:field="*{deskripsi}" rows="3"/>
                                         Kapasitas<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="kapasitas" th:field="*{kapasitas}" required />
+                                        <input class="form-control mb-3 mt-1" type="text" name="kapasitas" th:field="*{kapasitas}"/>
                                         Tanggal Mulai<br>
-                                        <input class="form-control mb-3 mt-1" type="date" name="tanggal_mulai" th:field="*{tanggal_mulai}" required />
+                                        <input class="form-control mb-3 mt-1" type="date" name="tanggal_mulai" th:field="*{tanggal_mulai}"/>
                                         Tanggal Selesai<br>
-                                        <input class="form-control mb-3 mt-1" type="date" name="tanggal_selesai" th:field="*{tanggal_selesai}" required />
+                                        <input class="form-control mb-3 mt-1" type="date" name="tanggal_selesai" th:field="*{tanggal_selesai}"/>
                                         Waktu Mulai<br>
-                                        <input class="form-control mb-3 mt-1" type="time" name="waktu_mulai" th:field="*{waktu_mulai}" required />
+                                        <input class="form-control mb-3 mt-1" type="time" name="waktu_mulai" th:field="*{waktu_mulai}"/>
                                         Waktu Selesai<br>
-                                        <input class="form-control mb-3 mt-1" type="time" name="waktu_selesai" th:field="*{waktu_selesai}" required />
+                                        <input class="form-control mb-3 mt-1" type="time" name="waktu_selesai" th:field="*{waktu_selesai}"/>
                                         Jenis Pelatihan<br>
                                         <select class="form-control mb-3 mt-1" name="jenis_pelatihan" th:field="*{jenis_pelatihan}">
                                             <option value="0"> Pilih Pelatihan </option>

@@ -27,26 +27,10 @@ public class PesertaController {
     @PostMapping("/add")
     private String addPesertaSubmit(
             @ModelAttribute PesertaModel peserta,
-            RedirectAttributes attributes){
+            Model model){
         pesertaService.addPeserta(peserta);
-        attributes.addFlashAttribute("message", "Peserta berhasil ditambahkan!");
+        model.addAttribute("message", "Peserta berhasil ditambahkan!");
         return "form-add-peserta";
     }
 
-//    @GetMapping("/laporan")
-//    public String addLaporanFormPage(Model model){
-//        model.addAttribute("laporan", new LaporanDetail());
-//        return "form-add-laporan";
-//    }
-//
-//    @PostMapping("/laporan")
-//    public String addLaporanSubmit(
-//            @ModelAttribute LaporanDetail laporan,
-//            @RequestParam(value="username") String username,
-//            @RequestParam(value="tanggal") Date tanggal,
-//            Model model){
-//        laporanRestService.postLaporan(laporan, username, tanggal);
-//        model.addAttribute("username", laporan.getUsername());
-//        return "add-laporan";
-//    }
 }

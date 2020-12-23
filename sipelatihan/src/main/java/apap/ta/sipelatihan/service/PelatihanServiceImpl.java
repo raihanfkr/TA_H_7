@@ -2,6 +2,7 @@ package apap.ta.sipelatihan.service;
 
 import apap.ta.sipelatihan.Repository.PelatihanDb;
 import apap.ta.sipelatihan.model.PelatihanModel;
+import apap.ta.sipelatihan.model.TrainerModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,8 @@ public class PelatihanServiceImpl implements PelatihanService{
     }
 
     @Override
-    public void updatePelatihan(PelatihanModel pelatihan) {
+    public PelatihanModel updatePelatihan(PelatihanModel pelatihan){
         pelatihanDb.save(pelatihan);
+        return pelatihan;
     }
 }

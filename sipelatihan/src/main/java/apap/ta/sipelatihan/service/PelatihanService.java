@@ -12,5 +12,5 @@ public interface PelatihanService {
 
     void addPelatihan(PelatihanModel pelatihan);
 
-    void updatePelatihan(PelatihanModel pelatihan);
+    PelatihanModel updatePelatihan(PelatihanModel pelatihan);
 }

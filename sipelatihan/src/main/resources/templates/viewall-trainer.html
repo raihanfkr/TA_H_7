@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Daftar Pelatihan</title>
+    <title>Daftar Trainer</title>
     <object th:replace="fragments/fragment :: css"></object>
     <object th:replace="fragments/fragment :: js   "></object>
 </head>
@@ -30,14 +30,14 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800" align="center">Pelatihan</h1>
+                    <h1 class="h3 mb-0 text-gray-800" align="center">Trainer</h1>
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <div class="card shadow mb-4">
                             <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-dark">Daftar Seluruh Pelatihan</h6>
+                                <h6 class="m-0 font-weight-bold text-dark">Daftar Seluruh Trainer</h6>
                                 <h6 class="m-0 text-success" th:text="${msg}"></h6>
                             </div>
                             <div class="card-body">
@@ -45,30 +45,22 @@
                                     <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Pelatihan</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Tanggal Selesai</th>
                                         <th>Nama Trainer</th>
-                                        <th>Jenis Pelatihan</th>
+                                        <th>No KTP</th>
+                                        <th>Nomor Telepon</th>
+                                        <th>Email</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr
-                                            th:each="pelatihan, iterationStatus: ${listPelatihan}"
-                                    >
+                                    <tr th:each="trainer, iterationStatus: ${listTrainer}">
                                         <td th:text="${iterationStatus.count}"></td>
-                                        <td th:text="${pelatihan.nama_pelatihan}"></td>
-                                        <td th:text="${pelatihan.tanggal_mulai}"></td>
-                                        <td th:text="${pelatihan.tanggal_selesai}"></td>
-                                        <td th:text="${pelatihan.trainer.nama_trainer}"></td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 1}">Onboarding</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 2}">Workshop</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 3}">Seminar</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 4}">BootCamp</td>
-                                        <td th:if="${pelatihan.jenis_pelatihan.id == 5}">Diklat</td>
+                                        <td th:text="${trainer.nama_trainer}"></td>
+                                        <td th:text="${trainer.noKtp}"></td>
+                                        <td th:text="${trainer.no_telepon}"></td>
+                                        <td th:text="${trainer.email}"></td>
                                         <td>
-                                            <a th:href="@{/pelatihan/detail/} + ${pelatihan.id}" class="btn btn-dark" style="color:white">Lihat</a>
+                                            <a th:href="@{/trainer/ubah/} + ${trainer.id}" class="btn btn-dark" style="color:white">Ubah</a>
                                         <td>
                                     </tr>
                                     </tbody>
@@ -78,11 +70,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
-            <footer th:replace="fragments/fragment :: footer"></footer>
-            <!-- End of Footer -->
         </div>
         <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer th:replace="fragments/fragment :: footer"></footer>
+        <!-- End of Footer -->
     </div>
     <!-- End of Content Wrapper -->
     <div th:replace="fragments/fragment :: logout"></div>

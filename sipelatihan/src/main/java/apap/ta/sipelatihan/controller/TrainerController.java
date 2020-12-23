@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -22,6 +23,14 @@ public class TrainerController {
     //    @Qualifier("trainerServiceImpl")
     @Autowired
     private TrainerService trainerService;
+
+    @GetMapping("/trainer/viewall")
+    public String listPelatihan(Model model) {
+        List<TrainerModel> listTrainer = trainerService.getTrainerList();
+        model.addAttribute("listTrainer", listTrainer);
+
+        return "viewall-trainer";
+    }
 
     @RequestMapping(value = "/trainer/add", method = RequestMethod.GET)
     public String addTrainerFormPage(Model model) {
@@ -36,15 +45,17 @@ public class TrainerController {
                                    Model model
     ) {
         try{
-            String exist_ktp =trainerService.checkTrainer(noKtp).getNoKtp();
+            String exist_ktp = trainerService.checkTrainer(noKtp).getNoKtp();
             if (noKtp.equals(exist_ktp)){
                 model.addAttribute("msg", "Penambahan Trainer gagal, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
+                return "form-add-trainer";
             }
         } catch (NoSuchElementException e){
             trainerService.addTrainer(trainer);
-            model.addAttribute("msg", "Trainer berhasil ditambahkan ke database !");
         }
-        return "add-trainer";
+        model.addAttribute("msg", "Trainer berhasil ditambahkan ke database!");
+        model.addAttribute("listTrainer", trainerService.getTrainerList());
+        return "viewall-trainer";
     }
 
     @GetMapping("/trainer/ubah/{id}")
@@ -61,12 +72,21 @@ public class TrainerController {
     @PostMapping("/trainer/ubah")
     private String changeTrainerFormSubmit(
             @ModelAttribute TrainerModel trainer,
+            String noKtp,
             Model model
     ){
-        TrainerModel updatedTrainer = trainerService.updateTrainer(trainer);
-        System.out.println("trainer");
-        model.addAttribute("trainer", updatedTrainer);
-
-        return "update-trainer";
+        try{
+            String exist_ktp = trainerService.checkTrainer(noKtp).getNoKtp();
+            if (noKtp.equals(exist_ktp)){
+                model.addAttribute("msg", "Trainer gagal diubah, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
+                model.addAttribute("trainer", trainer);
+                return "form-update-trainer";
+            }
+        } catch (NoSuchElementException e){
+            trainerService.updateTrainer(trainer);
+        }
+        model.addAttribute("msg", "Ubah Trainer berhasil!");
+        model.addAttribute("listTrainer", trainerService.getTrainerList());
+        return "viewall-trainer";
     }
 }

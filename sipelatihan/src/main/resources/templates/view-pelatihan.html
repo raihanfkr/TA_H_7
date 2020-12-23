@@ -102,6 +102,7 @@
                                                   th:object="${peserta_pelatihan}" method="POST">
                                                 <input type="hidden" th:field="*{pelatihan}">
                                                 <select name="pesertaId">
+                                                    <option value="0"> Pilih Peserta </option>
                                                     <option th:each="peserta : ${listPeserta}"
                                                             th:value="${peserta.id}"
                                                             th:text="${peserta.nama}"></option>
