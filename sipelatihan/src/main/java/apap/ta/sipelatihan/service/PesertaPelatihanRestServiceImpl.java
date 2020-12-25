@@ -28,7 +28,6 @@ public class PesertaPelatihanRestServiceImpl implements PesertaPelatihanRestServ
     public List<Map<String, Object>> retrieveListPesertaPelatihan(String nama_peserta) {
         List<Map<String, Object>> listPesertaPelatihan = new ArrayList<>();
         Integer id_peserta = pesertaDb.findByNama(nama_peserta).getId();
-
         Optional<PesertaModel> peserta = pesertaDb.findById(id_peserta);
         List<PesertaPelatihanModel> List = peserta.get().getListPesertaPelatihan();
         for (PesertaPelatihanModel p : List ){
@@ -39,7 +38,7 @@ public class PesertaPelatihanRestServiceImpl implements PesertaPelatihanRestServ
             map.put("nama_pelatihan", pelatihan.getNama_pelatihan());
             map.put("tanggal_mulai", pelatihan.getTanggal_mulai());
             map.put("tanggal_selesai", pelatihan.getTanggal_selesai());
-            listPesertaPelatihan.add (map);
+            listPesertaPelatihan.add(map);
         }
         return listPesertaPelatihan;
     }

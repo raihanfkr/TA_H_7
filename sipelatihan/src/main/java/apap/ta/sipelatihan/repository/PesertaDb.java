@@ -11,4 +11,5 @@ public interface PesertaDb extends JpaRepository<PesertaModel, Integer> {
     PesertaModel findByNama(String nama);
 
     Optional<PesertaModel> findById(Integer id);
+
 }

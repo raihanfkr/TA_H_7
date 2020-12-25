@@ -154,8 +154,8 @@ public class PelatihanController {
             @PathVariable(value="id") Integer id,
             @ModelAttribute PesertaPelatihanModel peserta_pelatihan,
             Integer pesertaId,
-            Model model){
-
+            Model model
+    ){
         PelatihanModel p = pelatihanService.getPelatihanById(id);
         model.addAttribute("pelatihan", p);
         model.addAttribute("peserta_pelatihan", peserta_pelatihan);

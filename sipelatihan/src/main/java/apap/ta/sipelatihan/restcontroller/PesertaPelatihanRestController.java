@@ -28,10 +28,5 @@ public class PesertaPelatihanRestController {
             @PathVariable(value = "nama_peserta") String nama_peserta){
         return pesertaPelatihanRestService.retrieveListPesertaPelatihan(nama_peserta);
     }
-//        List<PesertaPelatihanModel> p = ;
-//        List<PelatihanModel> pelatihan = pelatihanService.getPelatihanList();
-//        List<PelatihanModel> p = pelatihanService.getPelatihanList();
-//        PelatihanModel pelatihan = pelatihanService.getPelatihanById(pelatihan);
-//        return pelatihanM
-//        return pesertaPelatihanRestService.retrieveListPesertaPelatihan();
+
 }
