@@ -33,13 +33,13 @@ public class UserController {
     @Autowired
     private UserRestService userRestService;
 
-    @RequestMapping("/tambah")
+    @RequestMapping("/add")
     public String addUserPage(Model model) {
         model.addAttribute("listRole", roleService.findAll());
         return "form-add-user";
     }
 
-    @RequestMapping(value = "/tambah", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addUserSubmit(@ModelAttribute PegawaiDTO pegawai,
                                 @RequestParam("password") String password,
                                 RedirectAttributes redirect){
@@ -50,7 +50,7 @@ public class UserController {
         user.setRole(role);
         userService.addUser(user);
         userRestService.addPegawai(pegawai);
-        return "redirect:/user/tambah";
+        return "redirect:/user/add";
     }
 
     @RequestMapping(value = "/profil")

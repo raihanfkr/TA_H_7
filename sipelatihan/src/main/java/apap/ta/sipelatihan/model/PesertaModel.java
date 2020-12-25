@@ -13,12 +13,12 @@ import java.util.List;
 public class PesertaModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_peserta;
+    private Integer id;
 
     @NotNull
     @Size(max = 100)
     @Column(name = "nama_peserta", nullable = false)
-    private String nama_peserta;
+    private String nama;
 
     @NotNull
     @Size(max = 20)
@@ -38,20 +38,20 @@ public class PesertaModel implements Serializable {
     @OneToMany(mappedBy = "peserta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PesertaPelatihanModel> listPesertaPelatihan;
 
-    public Integer getId_peserta() {
-        return id_peserta;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_peserta(Integer id_peserta) {
-        this.id_peserta = id_peserta;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNama_peserta() {
-        return nama_peserta;
+    public String getNama() {
+        return nama;
     }
 
-    public void setNama_peserta(String nama_peserta) {
-        this.nama_peserta = nama_peserta;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
     public String getNo_telepon() {

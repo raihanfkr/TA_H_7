@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Ubah Trainer</title>
+    <title>Tambah Trainer</title>
     <object th:replace="fragments/fragment :: css"></object>
     <object th:replace="fragments/fragment :: js"></object>
 </head>
@@ -25,31 +25,26 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Ubah Trainer</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Tambah Trainer</h1>
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <div class="card shadow mb-4">
                             <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-dark">Form Ubah Trainer</h6>
+                                <h6 class="m-0 font-weight-bold text-dark">Form Tambah Trainer</h6>
                                 <h6 class="m-0 text-danger" th:text="${msg}"></h6>
                             </div>
                             <div class="card-body">
-                                <form action="/trainer/ubah" th:object="${trainer}" method="POST">
-                                    <input type="hidden" th:field="*{id}"/>
+                                <form th:action="@{/trainer/add}" th:object="${trainer}" method="POST">
                                     Nama<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="nama_trainer"
-                                           th:value="*{nama_trainer}"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="nama_trainer"/>
                                     No KTP<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="noKtp"
-                                           th:value="*{noKtp}"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="noKtp"/>
                                     No Telepon<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="no_telepon"
-                                           th:value="*{no_telepon}"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="no_telepon"/>
                                     Email<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="email"
-                                           th:value="*{email}"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="email"/>
                                     <br>
                                     <button type="submit" value="Submit" class="btn btn-dark mx-auto">Submit</button>
                                 </form>
@@ -66,9 +61,11 @@
         <footer th:replace="fragments/fragment :: footer"></footer>
         <!-- End of Footer -->
     </div>
-    <!-- End of Main Content -->
+    <!-- End of Content Wrapper -->
+
 </div>
+<!-- End of Page Wrapper -->
+
 <div th:replace="fragments/fragment :: logout"></div>
-</div>
 </body>
 </html>

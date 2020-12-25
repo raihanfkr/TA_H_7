@@ -22,11 +22,6 @@ public class PageController {
         return "login";
     }
 
-//    @RequestMapping("/addUser")
-//    public String addUserPage(Model model){
-//        model.addAttribute("listRole", roleService.findAll());
-//        return "add-user";
-//    }
 
 }
 

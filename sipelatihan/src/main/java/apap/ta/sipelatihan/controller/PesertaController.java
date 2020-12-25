@@ -20,13 +20,13 @@ public class PesertaController {
     @Autowired
     private PesertaService pesertaService;
 
-    @GetMapping("/tambah")
+    @GetMapping("/add")
     private String addPesertaForm(Model model){
         model.addAttribute("peserta", new PesertaModel());
         return "form-add-peserta";
     }
 
-    @PostMapping("/tambah")
+    @PostMapping("/add")
     private String addPesertaSubmit(
             @ModelAttribute PesertaModel peserta,
             RedirectAttributes attributes){

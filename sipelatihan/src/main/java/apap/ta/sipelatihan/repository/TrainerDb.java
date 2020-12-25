@@ -1,14 +1,13 @@
-package apap.ta.sipelatihan.repository;
+package apap.ta.sipelatihan.Repository;
 
 import apap.ta.sipelatihan.model.TrainerModel;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
-public interface TrainerDb extends JpaRepository<TrainerModel, Long>{
-    Optional<TrainerModel> findById(Integer id);
 
-    void deleteById(Integer id);
+public interface TrainerDb extends JpaRepository<TrainerModel, Integer>{
+    TrainerModel findTrainerModelById(Integer id);
+
+    TrainerModel findByNoKtp(String noKtp);
 }

@@ -16,22 +16,32 @@ import java.util.List;
 @Table(name="peserta_pelatihan")
 public class PesertaPelatihanModel implements Serializable {
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Size(max = 200)
     @Column(name = "no_peserta", nullable = false)
     private String no_peserta;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_pelatihan", referencedColumnName = "id_pelatihan")
+    @JoinColumn(name = "id_pelatihan", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private PelatihanModel pelatihan;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_peserta", referencedColumnName = "id_peserta")
+    @JoinColumn(name = "id_peserta", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private PesertaModel peserta;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNo_peserta() {
         return no_peserta;
