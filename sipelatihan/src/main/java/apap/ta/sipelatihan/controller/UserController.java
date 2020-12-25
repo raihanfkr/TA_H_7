@@ -34,7 +34,7 @@ public class UserController {
     private UserRestService userRestService;
 
     @RequestMapping("/add")
-    public String addUserPage(Model model) {
+    public String addUserForm(Model model) {
         model.addAttribute("listRole", roleService.findAll());
         return "form-add-user";
     }
@@ -42,7 +42,8 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addUserSubmit(@ModelAttribute PegawaiDTO pegawai,
                                 @RequestParam("password") String password,
-                                RedirectAttributes redirect){
+                                RedirectAttributes redirect,
+                                Model model){
         UserModel user = new UserModel();
         RoleModel role = roleService.findRoleById(pegawai.getRoleId());
         user.setUsername(pegawai.getUsername());
@@ -50,11 +51,14 @@ public class UserController {
         user.setRole(role);
         userService.addUser(user);
         userRestService.addPegawai(pegawai);
-        return "redirect:/user/add";
+        model.addAttribute("message","User berhasil ditambahkan!");
+        return "form-add-user";
     }
 
     @RequestMapping(value = "/profil")
-    private String profil(Model model) throws WebClientException {
+    private String profilUser(
+            Model model
+    ) throws WebClientException {
         UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
         RoleModel role = roleService.findRoleById(user.getRole().getId_role());
         try {
@@ -65,7 +69,7 @@ public class UserController {
         } catch (WebClientException webClientException){ }
         model.addAttribute("username", user.getUsername());
         model.addAttribute("role", role.getNama_role());
-        model.addAttribute("dateTime", LocalDateTime.now());
+//        model.addAttribute("dateTime", LocalDateTime.now());
 
         return "profil-user";
     }

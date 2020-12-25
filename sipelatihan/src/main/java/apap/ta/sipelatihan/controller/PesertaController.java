@@ -29,9 +29,10 @@ public class PesertaController {
     @PostMapping("/add")
     private String addPesertaSubmit(
             @ModelAttribute PesertaModel peserta,
+            Model model,
             RedirectAttributes attributes){
         pesertaService.addPeserta(peserta);
-        attributes.addFlashAttribute("message", "Peserta berhasil ditambahkan!");
+        model.addAttribute("message", "Peserta berhasil ditambahkan!");
         return "form-add-peserta";
     }
 }
