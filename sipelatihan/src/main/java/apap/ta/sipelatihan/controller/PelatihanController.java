@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,8 +156,8 @@ public class PelatihanController {
             @PathVariable(value="id") Integer id,
             @ModelAttribute PesertaPelatihanModel peserta_pelatihan,
             Integer pesertaId,
-            Model model
-    ){
+            Model model){
+
         PelatihanModel p = pelatihanService.getPelatihanById(id);
         model.addAttribute("pelatihan", p);
         model.addAttribute("peserta_pelatihan", peserta_pelatihan);
@@ -188,6 +190,7 @@ public class PelatihanController {
         return "redirect:/pelatihan/detail/{id}";
     }
 
+
     @GetMapping("/update-status/{id}")
     public String updateStatusPelatihanForm(
             @PathVariable Integer id,
@@ -201,10 +204,13 @@ public class PelatihanController {
     @PostMapping("/update-status")
     public String updateStatusPelatihanSubmit(
             @ModelAttribute PelatihanModel pelatihan,
+            HttpServletRequest request,
             Model model
     ){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName().toString();
-        pelatihan.setUserPenyetuju(userService.findUser(username));
+        Principal principal = request.getUserPrincipal();
+        UserModel user = userService.findUser(principal.getName());
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName().toString();
+        pelatihan.setUserPenyetuju(user);
         PelatihanModel pelatihanUpdated = pelatihanService.updateStatusPelatihan(pelatihan);
 
         List<PesertaModel> listPeserta = pesertaService.getListPeserta();
