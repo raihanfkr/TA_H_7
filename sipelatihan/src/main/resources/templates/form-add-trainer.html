@@ -38,13 +38,17 @@
                             <div class="card-body">
                                 <form th:action="@{/trainer/add}" th:object="${trainer}" method="POST">
                                     Nama<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="nama_trainer"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="nama_trainer"
+                                           placeholder="e.g. Bright Vachirawit"/>
                                     No KTP<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="noKtp"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="noKtp"
+                                           placeholder="e.g. 3306124403910302"/>
                                     No Telepon<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="no_telepon"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="no_telepon"
+                                           placeholder="e.g. 081123456789"/>
                                     Email<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="email"/>
+                                    <input class="form-control mb-3 mt-1" type="text" name="email"
+                                           placeholder="e.g. bbrightvc@gmail.com"/>
                                     <br>
                                     <button type="submit" value="Submit" class="btn btn-dark mx-auto">Submit</button>
                                 </form>

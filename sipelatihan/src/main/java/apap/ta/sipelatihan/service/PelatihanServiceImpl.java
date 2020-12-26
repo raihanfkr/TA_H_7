@@ -36,4 +36,13 @@ public class PelatihanServiceImpl implements PelatihanService{
         pelatihanDb.save(pelatihan);
         return pelatihan;
     }
+
+    @Override
+    public PelatihanModel updateStatusPelatihan(PelatihanModel pelatihan){
+        PelatihanModel targetPelatihan = pelatihanDb.findById(pelatihan.getId()).get();
+        targetPelatihan.setStatus_persetujuan(pelatihan.getStatus_persetujuan());
+        targetPelatihan.setUserPenyetuju(pelatihan.getUserPenyetuju());
+        pelatihanDb.save(targetPelatihan);
+        return targetPelatihan;
+    }
 }

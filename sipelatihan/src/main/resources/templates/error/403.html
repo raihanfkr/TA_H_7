@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <object th:replace="fragments/fragment :: css"></object>
+    <object th:replace="fragments/fragment :: js"></object>
+</head>
+
+<body id="page-top">
+
+                <!-- 404 Error Text -->
+                <div class="text-center" style="margin-top: 5vw">
+                    <h1 class="mx-auto">403</h1>
+                    <h2 class="lead text-gray-800 mb-5">Akses tidak ditemukan</h2>
+                    <h4 class="text-gray-500 mb-0">Maaf anda tidak memiliki akses pada page ini</h4>
+                    <br>
+                    <a th:href="@{/}">&larr; Kembali ke Halaman Utama</a>
+                </div>
+
+</body>
+</html>

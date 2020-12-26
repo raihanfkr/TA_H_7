@@ -27,22 +27,16 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800" th:text="'Selamat datang, '+ ${#httpServletRequest.remoteUser}+'!'"></h1>
+                <!-- 404 Error Text -->
+                <div class="text-center">
+                    <div class="error mx-auto" data-text="404">404</div>
+                    <p class="lead text-gray-800 mb-5">Page Not Found</p>
+                    <p class="text-gray-500 mb-0">Maaf anda tidak memiliki akses pada page ini</p>
+                    <a th:href="@{/}">&larr; Back to Dashboard</a>
                 </div>
 
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-dark">Selamat Datang di Sistem Informasi Tata Usaha</h6>
-                    </div>
-                    <div class="card-body">
-                        <p> SI-PELATIHAN adalah sistem informasi untuk mengelola pelatihan karyawan pada PT Samsan Tech Sejahtera </p>
-                    </div>
-                </div>
             </div>
-        </div>
-        <!-- End of Main Content -->
+            <!-- /.container-fluid -->
 
         <!-- Footer -->
         <footer th:replace="fragments/fragment :: footer"></footer>

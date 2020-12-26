@@ -78,8 +78,9 @@
                                                     <td th:if="${pelatihan.status_persetujuan == 0}">Menunggu Persetujuan</td>
                                                 </tr>
                                             </table>
-                                                <a th:href="@{/pelatihan/ubah/} + ${pelatihan.id}" class="btn btn-success">Change Pelatihan</a>
-                                                <a th:href="@{/pelatihan/delete/} + ${pelatihan.id}" class="btn btn-danger">Delete Pelatihan</a>
+                                                <a th:href="@{/pelatihan/update-status/} + ${pelatihan.id}" class="btn btn-dark">Ubah Status Pelatihan</a>
+                                                <a th:href="@{/pelatihan/ubah/} + ${pelatihan.id}" class="btn btn-success">Ubah Detail Pelatihan</a>
+                                                <a th:href="@{/pelatihan/delete/} + ${pelatihan.id}" class="btn btn-danger">Hapus Pelatihan</a>
                                         </div>
                                     </div>
                                 </div>
@@ -111,6 +112,7 @@
                                             </form>
                                         <br>
                                         <h6 class="m-0 text-danger" th:text="${gagal}"></h6>
+                                        <h6 class="m-0 text-danger" th:text="${berhasil}"></h6>
                                     </div>
                                         <br>
                                         <section>

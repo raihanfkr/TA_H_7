@@ -4,8 +4,11 @@ import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.PesertaModel;
 import apap.ta.sipelatihan.model.PesertaPelatihanModel;
 import apap.ta.sipelatihan.model.UserModel;
+import apap.ta.sipelatihan.rest.BaseResponse;
+import apap.ta.sipelatihan.rest.PegawaiDTO;
 import apap.ta.sipelatihan.service.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,10 +38,17 @@ public class PelatihanController {
     @Autowired
     private PesertaService pesertaService;
 
+    @Autowired
+    private UserRestService userRestService;
+
     @GetMapping("/viewall")
     public String listPelatihan(Model model) {
         List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanList();
         model.addAttribute("listPelatihan", listPelatihan);
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
 
         return "viewall-pelatihan";
     }
@@ -48,6 +58,10 @@ public class PelatihanController {
         model.addAttribute("pelatihan", new PelatihanModel());
         model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
         model.addAttribute("listTrainer", trainerService.getTrainerList());
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
 
         return "form-add-pelatihan";
     }
@@ -77,6 +91,10 @@ public class PelatihanController {
                 pelatihanService.addPelatihan(pelatihan);
             }
         }
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
         return "redirect:/pelatihan/viewall";
     }
 
@@ -89,6 +107,10 @@ public class PelatihanController {
         model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
         model.addAttribute("listTrainer", trainerService.getTrainerList());
 
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
         return "form-update-pelatihan";
     }
 
@@ -118,6 +140,11 @@ public class PelatihanController {
                 pelatihanService.updatePelatihan(pelatihan);
             }
         }
+
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
         return "redirect:/pelatihan/viewall";
     }
 
@@ -141,11 +168,10 @@ public class PelatihanController {
             model.addAttribute("pelatihan", pelatihan);
             model.addAttribute("listPeserta", listPeserta);
 
-//            if (listPesertaPelatihan.size() != 0){
-//                model.addAttribute("status",true);
-//            }else{
-//                model.addAttribute("status", false);
-//            }
+            UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+            BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+            PegawaiDTO pegawai = baseResponse.getResult();
+            model.addAttribute("pegawai", pegawai);
             return "view-pelatihan";
         }
     }
@@ -186,7 +212,48 @@ public class PelatihanController {
         peserta_pelatihan.setPelatihan(pelatihanService.getPelatihanById(id));
         pesertaPelatihanService.addPesertaPelatihan(peserta_pelatihan);
         model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
         return "redirect:/pelatihan/detail/{id}";
+    }
+
+    @GetMapping("/update-status/{id}")
+    public String updateStatusPelatihanForm(
+            @PathVariable Integer id,
+            Model model
+    ){
+        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
+        model.addAttribute("pelatihan", pelatihan);
+        return "form-update-status-pelatihan";
+    }
+
+    @PostMapping("/update-status")
+    public String updateStatusPelatihanSubmit(
+            @ModelAttribute PelatihanModel pelatihan,
+            Model model
+    ){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName().toString();
+        pelatihan.setUserPenyetuju(userService.findUser(username));
+        PelatihanModel pelatihanUpdated = pelatihanService.updateStatusPelatihan(pelatihan);
+
+        List<PesertaModel> listPeserta = pesertaService.getListPeserta();
+        List<PesertaPelatihanModel> listPesertaPelatihan = pelatihanUpdated.getListPesertaPelatihan();
+
+        model.addAttribute("pelatihan", pelatihanUpdated);
+        model.addAttribute("msg", "Status pelatihan berhasil diubah");
+
+        model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
+        model.addAttribute("peserta_pelatihan", new PesertaPelatihanModel());
+        model.addAttribute("listPeserta", listPeserta);
+
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
+
+        return "view-pelatihan";
     }
 }
 

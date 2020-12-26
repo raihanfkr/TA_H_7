@@ -7,9 +7,14 @@ import apap.ta.sipelatihan.model.PesertaPelatihanModel;
 import apap.ta.sipelatihan.model.RoleModel;
 import apap.ta.sipelatihan.model.TrainerModel;
 import apap.ta.sipelatihan.model.UserModel;
+import apap.ta.sipelatihan.rest.BaseResponse;
+import apap.ta.sipelatihan.rest.PegawaiDTO;
 import apap.ta.sipelatihan.service.TrainerService;
+import apap.ta.sipelatihan.service.UserRestService;
+import apap.ta.sipelatihan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +29,21 @@ public class TrainerController {
     @Autowired
     private TrainerService trainerService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRestService userRestService;
+
     @GetMapping("/trainer/viewall")
     public String listPelatihan(Model model) {
         List<TrainerModel> listTrainer = trainerService.getTrainerList();
         model.addAttribute("listTrainer", listTrainer);
+
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
 
         return "viewall-trainer";
     }
@@ -35,6 +51,11 @@ public class TrainerController {
     @RequestMapping(value = "/trainer/add", method = RequestMethod.GET)
     public String addTrainerFormPage(Model model) {
         model.addAttribute("trainer", "Trainer");
+
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
 
         return "form-add-trainer";
     }
@@ -55,6 +76,12 @@ public class TrainerController {
         }
         model.addAttribute("msg", "Trainer berhasil ditambahkan ke database!");
         model.addAttribute("listTrainer", trainerService.getTrainerList());
+
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
+
         return "viewall-trainer";
     }
 
@@ -65,6 +92,11 @@ public class TrainerController {
     ){
         TrainerModel trainer = trainerService.getTrainerById(id);
         model.addAttribute("trainer", trainer);
+
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
 
         return "form-update-trainer";
     }
@@ -87,6 +119,12 @@ public class TrainerController {
         }
         model.addAttribute("msg", "Ubah Trainer berhasil!");
         model.addAttribute("listTrainer", trainerService.getTrainerList());
+
+        UserModel user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        BaseResponse baseResponse = userRestService.getPegawai(user.getUsername());
+        PegawaiDTO pegawai = baseResponse.getResult();
+        model.addAttribute("pegawai", pegawai);
+
         return "viewall-trainer";
     }
 }

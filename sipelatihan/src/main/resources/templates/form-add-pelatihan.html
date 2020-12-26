@@ -42,9 +42,11 @@
                                 <div class="p-3">
                                     <form class="text-secondary" th:action="@{/pelatihan/add}" th:object="${pelatihan}" method="POST">
                                         Nama Pelatihan<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="nama_pelatihan" th:field="*{nama_pelatihan}"/>
+                                        <input class="form-control mb-3 mt-1" type="text" name="nama_pelatihan"
+                                               placeholder="e.g. Sandbox Training" th:field="*{nama_pelatihan}"/>
                                         Deskripsi<br>
-                                        <input class="form-control mb-3 mt-1" name="deskripsi" th:field="*{deskripsi}" rows="3"/>
+                                        <input class="form-control mb-3 mt-1" name="deskripsi"
+                                               placeholder="e.g. Belajar bisnis dan coding" th:field="*{deskripsi}" rows="3"/>
                                         Kapasitas<br>
                                         <input class="form-control mb-3 mt-1" type="text" name="kapasitas" th:field="*{kapasitas}"/>
                                         Tanggal Mulai<br>
