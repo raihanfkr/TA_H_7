@@ -13,7 +13,7 @@ import java.util.List;
 public class RoleModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_role;
+    private Long id_role;
 
     @NotNull
     @Size(max = 50)
@@ -23,11 +23,11 @@ public class RoleModel implements Serializable {
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserModel> listUser;
 
-    public Integer getId_role() {
+    public Long getId_role() {
         return id_role;
     }
 
-    public void setId_role(Integer id_role) {
+    public void setId_role(Long id_role) {
         this.id_role = id_role;
     }
 
