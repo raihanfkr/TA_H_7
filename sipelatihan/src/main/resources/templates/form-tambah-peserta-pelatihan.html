@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pelatihan</title>
+    <object th:replace="fragments/fragment :: css"></object>
+    <object th:replace="fragments/fragment :: js   "></object>
+</head>
+
+<body>
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <ul th:replace="fragments/fragment :: sidebar"></ul>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+            <nav th:replace="fragments/fragment :: navbar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                </div>
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800" align="center">Pelatihan</h1>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card shadow mb-4">
+                            <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-dark">Daftar Seluruh Pelatihan</h6>
+                                <h6 class="m-0 text-success" th:text="${msg}"></h6>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/pelatihan/tambah-peserta/} + ${pelatihan.id}" method="post">
+                                    <input name="idPesertas" hidden>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Nama Peserta</th>
+                                            <th>No Telepon</th>
+                                            <th>Alamat</th>
+                                            <th>Departemen</th>
+                                            <th th:if="${pelatihan.kapasitas > 0}">Pilih</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="p, iterationStatus: ${peserta}">
+                                            <th th:text="${p.nama}" name="nama" class="font-weight-normal"></th>
+                                            <th th:text="${p.no_telepon}" class="font-weight-normal"></th>
+                                            <th th:text="${p.alamat}" class="font-weight-normal"></th>
+                                            <th th:text="${p.departemen}" class="font-weight-normal"></th>
+                                            <th th:if="${pelatihan.kapasitas} != 0" class="font-weight-normal">
+                                                <input
+                                                        type="checkbox"
+                                                        name="checkbox"
+                                                        th:value="${p.id}"
+                                                />
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex justify-content-center" th:if="${pelatihan.kapasitas} > 0">
+                                        <input
+                                                type="submit"
+                                                value="Assign peserta"
+                                                class="btn btn-dark btn-md m-3"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer th:replace="fragments/fragment :: footer"></footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Main Content -->
+    </div>
+    <!-- End of Content Wrapper -->
+    <div th:replace="fragments/fragment :: logout"></div>
+</div>
+</body>
+</html>

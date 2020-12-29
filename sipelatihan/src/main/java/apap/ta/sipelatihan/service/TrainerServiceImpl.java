@@ -1,7 +1,7 @@
 package apap.ta.sipelatihan.service;
 
 import apap.ta.sipelatihan.model.TrainerModel;
-import apap.ta.sipelatihan.Repository.TrainerDb;
+import apap.ta.sipelatihan.repository.TrainerDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

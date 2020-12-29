@@ -3,12 +3,24 @@ package apap.ta.sipelatihan.rest;
 import apap.ta.sipelatihan.model.PelatihanModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+import java.util.Map;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BaseResponse {
     private int status;
     private String message;
     private PegawaiDTO result;
     private PelatihanModel resultPelatihan;
+    private List<Map<String,Object>> resultPesertaPelatihan;
+
+    public List<Map<String, Object>> getResultPesertaPelatihan() {
+        return resultPesertaPelatihan;
+    }
+
+    public void setResultPesertaPelatihan(List<Map<String, Object>> resultPesertaPelatihan) {
+        this.resultPesertaPelatihan = resultPesertaPelatihan;
+    }
 
     public PelatihanModel getResultPelatihan() {
         return resultPelatihan;

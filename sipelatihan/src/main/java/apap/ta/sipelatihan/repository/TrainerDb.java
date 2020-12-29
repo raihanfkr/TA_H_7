@@ -1,4 +1,4 @@
-package apap.ta.sipelatihan.Repository;
+package apap.ta.sipelatihan.repository;
 
 import apap.ta.sipelatihan.model.TrainerModel;
 import org.springframework.data.jpa.repository.JpaRepository;

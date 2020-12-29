@@ -55,7 +55,7 @@ public class TrainerController {
         }
         model.addAttribute("msg", "Trainer berhasil ditambahkan ke database!");
         model.addAttribute("listTrainer", trainerService.getTrainerList());
-        return "viewall-trainer";
+        return "berhasil";
     }
 
     @GetMapping("/trainer/ubah/{id}")
@@ -72,15 +72,19 @@ public class TrainerController {
     @PostMapping("/trainer/ubah")
     private String changeTrainerFormSubmit(
             @ModelAttribute TrainerModel trainer,
-            String noKtp,
+            String noKtp, String nama_trainer,
             Model model
     ){
         try{
-            String exist_ktp = trainerService.checkTrainer(noKtp).getNoKtp();
-            if (noKtp.equals(exist_ktp)){
-                model.addAttribute("msg", "Trainer gagal diubah, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
-                model.addAttribute("trainer", trainer);
-                return "form-update-trainer";
+            if (!(nama_trainer.equals(trainer.getNama_trainer()))) {
+                String exist_ktp = trainerService.checkTrainer(noKtp).getNoKtp();
+                if (noKtp.equals(exist_ktp)) {
+                    model.addAttribute("msg", "Trainer gagal diubah, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
+                    model.addAttribute("trainer", trainer);
+                    return "form-update-trainer";
+                }
+            }else {
+                trainerService.updateTrainer(trainer);
             }
         } catch (NoSuchElementException e){
             trainerService.updateTrainer(trainer);

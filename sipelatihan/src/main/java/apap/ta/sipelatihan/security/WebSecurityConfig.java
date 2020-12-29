@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pelatihan/add").hasAnyAuthority("Staff Training", "Kepala Bagian")
                 .antMatchers("/pelatihan/detail/**").hasAnyAuthority("Staff Training", "Kepala Bagian", "Kepala Departemen HR")
                 .antMatchers("/pelatihan/ubah/**").hasAnyAuthority("Staff Training", "Kepala Bagian")
-//                .antMatchers("/pelatihan/hapus/**").hasAnyAuthority("Staff Training", "Kepala Bagian")
+                .antMatchers("/pelatihan/hapus/**").hasAnyAuthority("Staff Training", "Kepala Bagian")
                 .antMatchers("/pelatihan/update-status/**").hasAnyAuthority("Kepala Bagian", "Kepala Departemen HR")
 
                 .anyRequest().authenticated()

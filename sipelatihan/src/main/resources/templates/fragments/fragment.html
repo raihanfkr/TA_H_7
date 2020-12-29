@@ -140,6 +140,28 @@
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Lainnya
+        </div>
+
+        <!-- Nav Item - Laporan Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporan"
+               aria-expanded="true" aria-controls="collapseLaporan">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>SI Payroll</span>
+            </a>
+            <div id="collapseLaporan" class="collapse" aria-labelledby="headingLaporan" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" th:href="@{/peserta/laporan}">Tambah Laporan</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
     </ul>
     <!-- End of Sidebar -->
 

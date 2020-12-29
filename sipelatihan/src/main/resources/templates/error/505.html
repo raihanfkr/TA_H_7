@@ -29,29 +29,29 @@
 
                 <!-- 404 Error Text -->
                 <div class="text-center">
-                    <div class="error mx-auto" data-text="404">505</div>
-                    <p class="lead text-gray-800 mb-5">Tidak ada Akses</p>
-                    <p class="text-gray-500 mb-0">Maaf anda tidak memiliki akses pada page ini</p>
-                    <a th:href="@{/}">&larr; Back to Dashboard</a>
+                    <div class="error mx-auto" data-text="505" style="margin-top: 5vw;">505</div>
+                    <p class="lead text-gray-800 mb-5">Tidak ada akses ke halaman ini</p>
+                    <p class="text-gray-500 mb-0">Maaf anda tidak memiliki akses ke halaman ini</p>
+                    <br>
+                    <a th:href="@{/}">&larr; Kembali ke Halaman Utama</a>
                 </div>
 
             </div>
             <!-- /.container-fluid -->
 
+        </div>
+        <!-- End of Content Wrapper -->
+
         <!-- Footer -->
         <footer th:replace="fragments/fragment :: footer"></footer>
         <!-- End of Footer -->
-
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-<div th:replace="fragments/fragment :: logout"></div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <div th:replace="fragments/fragment :: logout"></div>
 </body>
 </html>

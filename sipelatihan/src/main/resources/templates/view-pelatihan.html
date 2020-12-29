@@ -80,7 +80,7 @@
                                             </table>
                                                 <a th:href="@{/pelatihan/update-status/} + ${pelatihan.id}" class="btn btn-dark">Ubah Status Pelatihan</a>
                                                 <a th:href="@{/pelatihan/ubah/} + ${pelatihan.id}" class="btn btn-success">Ubah Detail Pelatihan</a>
-                                                <a th:href="@{/pelatihan/delete/} + ${pelatihan.id}" class="btn btn-danger">Hapus Pelatihan</a>
+                                                <a th:href="@{/pelatihan/hapus/} + ${pelatihan.id}" class="btn btn-danger">Hapus Pelatihan</a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,8 @@
                                                             th:value="${peserta.id}"
                                                             th:text="${peserta.nama}"></option>
                                                 </select>
-                                                <button type="submit" value="submit" class="btn btn-dark">Tambah Peserta</button>
+<!--                                                <button type="submit" value="submit" class="btn btn-dark">Tambah Peserta</button>-->
+                                                <a th:href="@{/pelatihan/tambah-peserta/} + ${pelatihan.id}" class="btn btn-danger">Tambah Peserta</a>
                                             </form>
                                         <br>
                                         <h6 class="m-0 text-danger" th:text="${gagal}"></h6>
@@ -153,5 +154,6 @@
         <!-- End of Footer -->
     </div></div>
 </div></div>
+<div th:replace="fragments/fragment :: logout"></div>
 </body>
 </html>

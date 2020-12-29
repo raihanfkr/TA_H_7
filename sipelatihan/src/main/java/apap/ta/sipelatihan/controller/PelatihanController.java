@@ -10,8 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +80,7 @@ public class PelatihanController {
                 pelatihanService.addPelatihan(pelatihan);
             }
         }
-        return "redirect:/pelatihan/viewall";
+        return "berhasil";
     }
 
     @GetMapping("/ubah/{id}")
@@ -93,33 +95,49 @@ public class PelatihanController {
         return "form-update-pelatihan";
     }
 
-    @PostMapping("/ubah")
+    @PostMapping("/ubah/{id}")
     public String updatePelatihanSubmit(
-          @ModelAttribute("pelatihan") PelatihanModel pelatihan,
-          Authentication auth,
-          Model model
+            @PathVariable("id") Integer id,
+            @ModelAttribute("pelatihan") PelatihanModel pelatihan,
+            Authentication auth,
+              Model model
     ) {
-        if (pelatihan.getTanggal_mulai().after(pelatihan.getTanggal_selesai())) {
-            model.addAttribute("failed", "Tanggal yang dimasukkan salah");
-            model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
-            model.addAttribute("listTrainer", trainerService.getTrainerList());
-            return "form-update-pelatihan";
-        }
-        else {
-            if(pelatihan.getWaktu_mulai().after(pelatihan.getWaktu_selesai()) || pelatihan.getWaktu_mulai()
-                    .equals(pelatihan.getWaktu_selesai())) {
-                model.addAttribute("failed", "Waktu yang dimasukkan salah");
+        System.out.println(pelatihan.getListPesertaPelatihan());
+        if (pelatihan.getListPesertaPelatihan() != null) {
+            if (pelatihan.getListPesertaPelatihan().size() > pelatihan.getKapasitas()) {
+                model.addAttribute("failed", "Kapasitas tidak boleh kurang dari jumlah peserta terdaftar");
+                model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
+                model.addAttribute("listTrainer", trainerService.getTrainerList());
+                return "gagal";
+            } else {
+                UserModel pengaju = userService.findUser(auth.getName());
+                pelatihan.setUserPengaju(pengaju);
+                pelatihanService.updatePelatihan(pelatihan);
+            }
+        } else {
+            if (pelatihan.getTanggal_mulai().after(pelatihan.getTanggal_selesai())) {
+                model.addAttribute("failed", "Tanggal yang dimasukkan salah");
                 model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
                 model.addAttribute("listTrainer", trainerService.getTrainerList());
                 return "form-update-pelatihan";
             }
             else {
-                UserModel pengaju = userService.findUser(auth.getName());
-                pelatihan.setUserPengaju(pengaju);
-                pelatihanService.updatePelatihan(pelatihan);
+                if(pelatihan.getWaktu_mulai().after(pelatihan.getWaktu_selesai()) || pelatihan.getWaktu_mulai()
+                        .equals(pelatihan.getWaktu_selesai())) {
+                    model.addAttribute("failed", "Waktu yang dimasukkan salah");
+                    model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
+                    model.addAttribute("listTrainer", trainerService.getTrainerList());
+                    return "form-update-pelatihan";
+                }
+                else {
+                    System.out.println("ah");
+                    UserModel pengaju = userService.findUser(auth.getName());
+                    pelatihan.setUserPengaju(pengaju);
+                    pelatihanService.updatePelatihan(pelatihan);
+                }
             }
         }
-        return "redirect:/pelatihan/viewall";
+        return "berhasil";
     }
 
 
@@ -127,68 +145,91 @@ public class PelatihanController {
     public String viewDetailPelatihan(
             @PathVariable(value = "id") Integer id,
             Model model) {
-        if (id == null) {
-            return "error-page";
-        }
-        else{
-            PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
 
-            List<PesertaModel> listPeserta = pesertaService.getListPeserta();
-
-            List<PesertaPelatihanModel> listPesertaPelatihan = pelatihan.getListPesertaPelatihan();
-
-            model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
-            model.addAttribute("peserta_pelatihan", new PesertaPelatihanModel());
-            model.addAttribute("pelatihan", pelatihan);
-            model.addAttribute("listPeserta", listPeserta);
-
-//            if (listPesertaPelatihan.size() != 0){
-//                model.addAttribute("status",true);
-//            }else{
-//                model.addAttribute("status", false);
-//            }
-            return "view-pelatihan";
-        }
-    }
-
-    @PostMapping("/{id}/tambah-peserta")
-    private String addPesertaPelatihanFormSubmit(
-            @PathVariable(value="id") Integer id,
-            @ModelAttribute PesertaPelatihanModel peserta_pelatihan,
-            Integer pesertaId,
-            Model model){
-
-        PelatihanModel p = pelatihanService.getPelatihanById(id);
-        model.addAttribute("pelatihan", p);
-        model.addAttribute("peserta_pelatihan", peserta_pelatihan);
+        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
 
         List<PesertaModel> listPeserta = pesertaService.getListPeserta();
+
+        List<PesertaPelatihanModel> listPesertaPelatihan = pelatihan.getListPesertaPelatihan();
+
+        model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
+        model.addAttribute("peserta_pelatihan", new PesertaPelatihanModel());
+        model.addAttribute("pelatihan", pelatihan);
         model.addAttribute("listPeserta", listPeserta);
 
-        List<PesertaPelatihanModel> listPesertaPelatihan = p.getListPesertaPelatihan();
-        ArrayList<String> nama = new ArrayList<>();
-        for (PesertaPelatihanModel pp : listPesertaPelatihan){
-            nama.add(pp.getPeserta().getNama());
-        }
-        model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
-
-        if (pesertaService.getPesertaByID(pesertaId) != null){
-            PesertaModel pesertaNama = pesertaService.getPesertaByID(pesertaId);
-            if (nama.contains(pesertaNama.getNama())){
-                model.addAttribute("gagal", "Peserta sudah terdaftar");
-                model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
-                return "view-pelatihan";
-            }
-        }
-
-        String no_peserta = String.valueOf(pesertaId);
-        peserta_pelatihan.setNo_peserta(no_peserta);
-        peserta_pelatihan.setPeserta(pesertaService.getPesertaByID(pesertaId));
-        peserta_pelatihan.setPelatihan(pelatihanService.getPelatihanById(id));
-        pesertaPelatihanService.addPesertaPelatihan(peserta_pelatihan);
-        model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
-        return "redirect:/pelatihan/detail/{id}";
+        return "view-pelatihan";
     }
+
+    @GetMapping(value = "/tambah-peserta/{id}")
+    private String TambahPesertaFormPage(
+            @PathVariable("id") Integer id,
+            Model model){
+        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
+        int jumlahPesertaTerdaftar = pesertaPelatihanService.getPesertaPelatihanByPelatihan(pelatihan).size();
+        model.addAttribute("pelatihan",pelatihan);
+        model.addAttribute("kapasitas",pelatihan.getKapasitas() - jumlahPesertaTerdaftar);
+        model.addAttribute("peserta",pesertaService.getListPesertaBaru(pelatihan));
+
+        return "form-tambah-peserta-pelatihan";
+    }
+
+    @PostMapping(value = "/tambah-peserta/{id}")
+    public String addPesertaPelatihanSubmit(
+                @PathVariable("id") Integer idPelatihan,
+                @RequestParam("checkbox") Integer[] checkbox,
+                @ModelAttribute PesertaPelatihanModel pesertaPelatihan,
+                String nama,
+                Model model) {
+
+        if (checkbox.length == 2){
+            pesertaPelatihan.setPelatihan(pelatihanService.getPelatihanById(idPelatihan));
+            pesertaPelatihan.setPeserta(pesertaService.getPesertaByNamaPeserta(nama));
+            pesertaPelatihanService.addPesertaPelatihan(pesertaPelatihan);
+            return "berhasil";
+        }
+        return "gagal";
+    }
+
+
+//    @PostMapping("/{id}/tambah-peserta")
+//    private String addPesertaPelatihanFormSubmit(
+//            @PathVariable(value="id") Integer id,
+//            @ModelAttribute PesertaPelatihanModel peserta_pelatihan,
+//            Integer pesertaId,
+//            Model model){
+//
+//        PelatihanModel p = pelatihanService.getPelatihanById(id);
+//        model.addAttribute("pelatihan", p);
+//        model.addAttribute("peserta_pelatihan", peserta_pelatihan);
+//
+//        List<PesertaModel> listPeserta = pesertaService.getListPeserta();
+//        model.addAttribute("listPeserta", listPeserta);
+//
+//        List<PesertaPelatihanModel> listPesertaPelatihan = p.getListPesertaPelatihan();
+//        ArrayList<String> nama = new ArrayList<>();
+//        for (PesertaPelatihanModel pp : listPesertaPelatihan){
+//            nama.add(pp.getPeserta().getNama());
+//        }
+//
+//        if (pesertaService.getPesertaByID(pesertaId) != null){
+//            PesertaModel pesertaNama = pesertaService.getPesertaByID(pesertaId);
+//            if (nama.contains(pesertaNama.getNama())){
+//                model.addAttribute("gagal", "Peserta sudah terdaftar");
+//                model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
+//                return "view-pelatihan";
+//            }
+//        }
+//
+//        String no_peserta = String.valueOf(pesertaId);
+//        peserta_pelatihan.setNo_peserta(no_peserta);
+//        peserta_pelatihan.setPeserta(pesertaService.getPesertaByID(pesertaId));
+//        peserta_pelatihan.setPelatihan(pelatihanService.getPelatihanById(id));
+//        pesertaPelatihanService.addPesertaPelatihan(peserta_pelatihan);
+//        model.addAttribute("listPesertaPelatihan", listPesertaPelatihan);
+//        return "view-pelatihan";
+////        return "redirect:/pelatihan/detail/{id}";
+//    }
+
 
     @GetMapping("/update-status/{id}")
     public String updateStatusPelatihanForm(
@@ -219,7 +260,22 @@ public class PelatihanController {
         model.addAttribute("peserta_pelatihan", new PesertaPelatihanModel());
         model.addAttribute("listPeserta", listPeserta);
 
-        return "view-pelatihan";
+        return "berhasil";
+    }
+
+    @GetMapping("/hapus/{id}")
+    public String deletePesawat(
+            @PathVariable(value = "id") Integer id,
+            Model model){
+        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
+
+        if (pelatihan.getStatus_persetujuan() == 2){
+            model.addAttribute("msg", "Pelatihan gagal dihapus!");
+            return "gagal";
+        }else{
+            pelatihanService.deletePelatihan(id);
+        }
+        return "berhasil";
     }
 }
 

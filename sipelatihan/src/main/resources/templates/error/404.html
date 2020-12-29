@@ -29,22 +29,22 @@
 
                 <!-- 404 Error Text -->
                 <div class="text-center">
-                    <div class="error mx-auto" data-text="404">404</div>
-                    <p class="lead text-gray-800 mb-5">Page Not Found</p>
-                    <p class="text-gray-500 mb-0">Maaf anda tidak memiliki akses pada page ini</p>
-                    <a th:href="@{/}">&larr; Back to Dashboard</a>
+                    <div class="error mx-auto" data-text="404" style="margin-top: 5vw;">404</div>
+                    <p class="lead text-gray-800 mb-5">Halaman tidak ditemukan</p>
+                    <p class="text-gray-500 mb-0">Maaf anda salah halaman</p>
+                    <br>
+                    <a th:href="@{/}">&larr; Kembali ke Halaman Utama</a>
                 </div>
 
             </div>
             <!-- /.container-fluid -->
 
-        <!-- Footer -->
-        <footer th:replace="fragments/fragment :: footer"></footer>
-        <!-- End of Footer -->
-
     </div>
     <!-- End of Content Wrapper -->
 
+        <!-- Footer -->
+        <footer th:replace="fragments/fragment :: footer"></footer>
+        <!-- End of Footer -->
 </div>
 <!-- End of Page Wrapper -->
 

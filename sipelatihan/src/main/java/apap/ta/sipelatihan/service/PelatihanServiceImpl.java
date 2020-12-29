@@ -1,6 +1,6 @@
 package apap.ta.sipelatihan.service;
 
-import apap.ta.sipelatihan.Repository.PelatihanDb;
+import apap.ta.sipelatihan.repository.PelatihanDb;
 import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.TrainerModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,15 @@ public class PelatihanServiceImpl implements PelatihanService{
 
     @Override
     public PelatihanModel updatePelatihan(PelatihanModel pelatihan){
+        pelatihan.setNama_pelatihan(pelatihan.getNama_pelatihan());
+        pelatihan.setDeskripsi(pelatihan.getDeskripsi());
+        pelatihan.setKapasitas(pelatihan.getKapasitas());
+        pelatihan.setTanggal_mulai(pelatihan.getTanggal_mulai());
+        pelatihan.setTanggal_selesai(pelatihan.getTanggal_selesai());
+        pelatihan.setWaktu_mulai(pelatihan.getWaktu_mulai());
+        pelatihan.setWaktu_selesai(pelatihan.getWaktu_selesai());
+        pelatihan.setTrainer(pelatihan.getTrainer());
+        pelatihan.setJenis_pelatihan(pelatihan.getJenis_pelatihan());
         pelatihanDb.save(pelatihan);
         return pelatihan;
     }
@@ -44,5 +53,10 @@ public class PelatihanServiceImpl implements PelatihanService{
         targetPelatihan.setUserPenyetuju(pelatihan.getUserPenyetuju());
         pelatihanDb.save(targetPelatihan);
         return targetPelatihan;
+    }
+
+    @Override
+    public void deletePelatihan(Integer id) {
+        pelatihanDb.deleteById(id);
     }
 }

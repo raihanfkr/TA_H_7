@@ -1,6 +1,8 @@
 package apap.ta.sipelatihan.service;
 
+import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.PesertaModel;
+import apap.ta.sipelatihan.model.PesertaPelatihanModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +14,8 @@ public interface PesertaService {
     List<PesertaModel> getListPeserta();
 
     PesertaModel getPesertaByID(Integer id);
+
+    PesertaModel getPesertaByNamaPeserta(String nama);
+
+    List<PesertaModel> getListPesertaBaru(PelatihanModel pelatihan);
 }

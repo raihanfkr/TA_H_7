@@ -42,7 +42,6 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addUserSubmit(@ModelAttribute PegawaiDTO pegawai,
                                 @RequestParam("password") String password,
-                                RedirectAttributes redirect,
                                 Model model){
         UserModel user = new UserModel();
         RoleModel role = roleService.findRoleById(pegawai.getRoleId());
@@ -52,7 +51,7 @@ public class UserController {
         userService.addUser(user);
         userRestService.addPegawai(pegawai);
         model.addAttribute("message","User berhasil ditambahkan!");
-        return "form-add-user";
+        return "berhasil";
     }
 
     @RequestMapping(value = "/profil")

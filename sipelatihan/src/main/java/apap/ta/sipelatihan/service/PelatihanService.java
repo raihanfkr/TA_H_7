@@ -15,4 +15,6 @@ public interface PelatihanService {
     PelatihanModel updatePelatihan(PelatihanModel pelatihan);
 
     PelatihanModel updateStatusPelatihan(PelatihanModel pelatihan);
+
+    void deletePelatihan(Integer id);
 }
