@@ -1,6 +1,7 @@
 package apap.ta.sipelatihan.service;
 
 import apap.ta.sipelatihan.model.PelatihanModel;
+import apap.ta.sipelatihan.model.UserModel;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface PelatihanService {
 
     List<PelatihanModel> getPelatihanList();
 
-    List<PelatihanModel> getPelatihanListPengaju();
+    List<PelatihanModel> getPelatihanListPengaju(UserModel user);
 
     PelatihanModel getPelatihanById(Integer id);
 

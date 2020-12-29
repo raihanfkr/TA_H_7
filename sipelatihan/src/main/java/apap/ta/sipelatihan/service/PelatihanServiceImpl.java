@@ -1,5 +1,6 @@
 package apap.ta.sipelatihan.service;
 
+import apap.ta.sipelatihan.model.UserModel;
 import apap.ta.sipelatihan.repository.PelatihanDb;
 import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.TrainerModel;
@@ -22,8 +23,8 @@ public class PelatihanServiceImpl implements PelatihanService{
     }
 
     @Override
-    public List<PelatihanModel> getPelatihanListPengaju() {
-        return pelatihanDb.findByUserPengaju();
+    public List<PelatihanModel> getPelatihanListPengaju(UserModel user) {
+        return pelatihanDb.findAllByUserPengaju(user);
     }
 
     @Override

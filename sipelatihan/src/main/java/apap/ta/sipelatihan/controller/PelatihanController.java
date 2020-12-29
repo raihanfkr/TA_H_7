@@ -47,7 +47,7 @@ public class PelatihanController {
             List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanList();
             model.addAttribute("listPelatihan", listPelatihan);
         } else {
-            List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanListPengaju();
+            List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanListPengaju(user);
             model.addAttribute("listPelatihan", listPelatihan);
         }
         return "viewall-pelatihan";
