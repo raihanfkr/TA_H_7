@@ -21,9 +21,6 @@ public class PesertaPelatihanRestController {
     @Autowired
     private PesertaPelatihanRestService pesertaPelatihanRestService;
 
-    @Autowired
-    private PelatihanService pelatihanService;
-
     @GetMapping(value = "/peserta-pelatihan/{nama_peserta}")
     private BaseResponse retrievePesertaPelatihan(
             @PathVariable(value = "nama_peserta") String nama_peserta){

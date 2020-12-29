@@ -15,7 +15,6 @@ public class LaporanDetail {
     @JsonProperty("jumlah-training")
     private Integer jumlahTraining;
 
-
     public String getStatus() {
         return status;
     }

@@ -4,14 +4,11 @@ import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.PesertaModel;
 import apap.ta.sipelatihan.model.PesertaPelatihanModel;
 import apap.ta.sipelatihan.repository.PesertaPelatihanDb;
-import apap.ta.sipelatihan.rest.KaryawanDetail;
-import apap.ta.sipelatihan.rest.ListPesertaDetail;
-import org.apache.commons.logging.Log;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -65,11 +62,6 @@ public class PesertaPelatihanServiceImpl implements PesertaPelatihanService{
             this.addPesertaPelatihan(pesertaPelatihan);
         }
     }
-
-    //            System.out.println(kumpulanId);
-//            System.out.println(id);
-//            String kumpulanIdd = Arrays.toString(kumpulanId);
-//            System.out.println(kumpulanId);
 
     @Override
     public void assignPesertaPelatihanFromPegawai(List<Map<String, Object>> listPesertaDetail, PelatihanModel pelatihanModel) {

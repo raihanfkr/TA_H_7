@@ -1,6 +1,5 @@
 package apap.ta.sipelatihan.rest;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class KaryawanDetail {

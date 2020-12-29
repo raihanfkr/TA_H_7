@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @Controller
 public class TrainerController {
-    //    @Qualifier("trainerServiceImpl")
     @Autowired
     private TrainerService trainerService;
 

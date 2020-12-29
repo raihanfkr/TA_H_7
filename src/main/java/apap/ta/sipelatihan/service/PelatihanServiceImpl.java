@@ -1,8 +1,8 @@
 package apap.ta.sipelatihan.service;
 
-import apap.ta.sipelatihan.Repository.PelatihanDb;
+import apap.ta.sipelatihan.model.UserModel;
+import apap.ta.sipelatihan.repository.PelatihanDb;
 import apap.ta.sipelatihan.model.PelatihanModel;
-import apap.ta.sipelatihan.model.TrainerModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +22,11 @@ public class PelatihanServiceImpl implements PelatihanService{
     }
 
     @Override
+    public List<PelatihanModel> getPelatihanListPengaju(UserModel user) {
+        return pelatihanDb.findAllByUserPengaju(user);
+    }
+
+    @Override
     public PelatihanModel getPelatihanById(Integer id) {
         return pelatihanDb.findById(id).get();
     }
@@ -33,6 +38,15 @@ public class PelatihanServiceImpl implements PelatihanService{
 
     @Override
     public PelatihanModel updatePelatihan(PelatihanModel pelatihan){
+        pelatihan.setNama_pelatihan(pelatihan.getNama_pelatihan());
+        pelatihan.setDeskripsi(pelatihan.getDeskripsi());
+        pelatihan.setKapasitas(pelatihan.getKapasitas());
+        pelatihan.setTanggal_mulai(pelatihan.getTanggal_mulai());
+        pelatihan.setTanggal_selesai(pelatihan.getTanggal_selesai());
+        pelatihan.setWaktu_mulai(pelatihan.getWaktu_mulai());
+        pelatihan.setWaktu_selesai(pelatihan.getWaktu_selesai());
+        pelatihan.setTrainer(pelatihan.getTrainer());
+        pelatihan.setJenis_pelatihan(pelatihan.getJenis_pelatihan());
         pelatihanDb.save(pelatihan);
         return pelatihan;
     }

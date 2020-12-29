@@ -5,5 +5,6 @@ import apap.ta.sipelatihan.rest.PegawaiDTO;
 
 public interface UserRestService {
     BaseResponse addPegawai(PegawaiDTO pegawai);
+
     BaseResponse getPegawai(String username);
 }

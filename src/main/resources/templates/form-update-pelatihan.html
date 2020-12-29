@@ -40,7 +40,7 @@
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="p-3">
-                                    <form class="text-secondary" th:action="@{/pelatihan/ubah}" th:object="${pelatihan}" method="POST">
+                                    <form class="text-secondary" th:action="@{/pelatihan/ubah/} + ${pelatihan.id}" th:object="${pelatihan}" method="POST">
                                         <input type="hidden" th:field="*{id}"/>
                                         Nama Pelatihan<br>
                                         <input class="form-control mb-3 mt-1" type="text" name="nama_pelatihan" th:field="*{nama_pelatihan}" th:value="*{nama_pelatihan}"/>

@@ -1,6 +1,6 @@
 package apap.ta.sipelatihan.service;
 
-import apap.ta.sipelatihan.Repository.PelatihanDb;
+import apap.ta.sipelatihan.repository.PelatihanDb;
 import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.PesertaModel;
 import apap.ta.sipelatihan.model.PesertaPelatihanModel;

@@ -15,7 +15,5 @@ public interface PesertaDb extends JpaRepository<PesertaModel, Integer> {
 
     List<PesertaModel> findByNamaNotIn(List<String> nama);
 
-//    List<PesertaModel> findByIdPesertaNotIn(List<Integer> idPeserta);
-
     List<PesertaModel> findByIdIn(List<Integer> idPeserta);
 }

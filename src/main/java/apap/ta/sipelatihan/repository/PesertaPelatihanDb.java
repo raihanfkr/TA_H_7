@@ -12,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface PesertaPelatihanDb extends JpaRepository<PesertaPelatihanModel, Long> {
     List<PesertaPelatihanModel> findPesertaPelatihanModelByPelatihan(PelatihanModel pelatihanModel);
+
     List<PesertaPelatihanModel> findPesertaPelatihanModelByPeserta(PesertaModel pesertaModel);
 }

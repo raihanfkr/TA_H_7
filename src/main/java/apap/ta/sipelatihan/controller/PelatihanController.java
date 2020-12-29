@@ -44,12 +44,18 @@ public class PelatihanController {
     @Autowired
     private KaryawanRestService karyawanRestService;
 
-
-    @GetMapping("/viewall")
-    public String listPelatihan(Model model) {
-        List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanList();
-        model.addAttribute("listPelatihan", listPelatihan);
-
+    @GetMapping("/")
+    public String listPelatihan(
+            Authentication auth,
+            Model model) {
+        UserModel user = userService.findUser(auth.getName());
+        if (user.getRole().getId_role() == 1 || user.getRole().getId_role() == 2) {
+            List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanList();
+            model.addAttribute("listPelatihan", listPelatihan);
+        } else {
+            List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanListPengaju(user);
+            model.addAttribute("listPelatihan", listPelatihan);
+        }
         return "viewall-pelatihan";
     }
 
@@ -102,102 +108,49 @@ public class PelatihanController {
         return "form-update-pelatihan";
     }
 
-    @PostMapping("/ubah")
+    @PostMapping("/ubah/{id}")
     public String updatePelatihanSubmit(
-          @ModelAttribute("pelatihan") PelatihanModel pelatihan,
-          Authentication auth,
-          Model model
+            @PathVariable("id") Integer id,
+            @ModelAttribute("pelatihan") PelatihanModel pelatihan,
+            Authentication auth,
+            Model model
     ) {
-//        Perlu
-//        diperhatikan apabila terdapat perubahan kapasitas yang nantinya membuat jumlah peserta
-//        yang ada menjadi melebihi kapasitas, maka operasi perubahan tidak dapat dilakukan dan
-//        tampilkan notifikasi gagal.
-
-        if (pelatihan.getTanggal_mulai().after(pelatihan.getTanggal_selesai())) {
-            model.addAttribute("failed", "Tanggal yang dimasukkan salah");
-            model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
-            model.addAttribute("listTrainer", trainerService.getTrainerList());
-            return "form-update-pelatihan";
-        }
-
-//        else if(pelatihan.getListPesertaPelatihan().size() > pelatihan.getKapasitas()){
-//            model.addAttribute("failed", "Tanggal yang dimasukkan salah");
-//            model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
-//            model.addAttribute("listTrainer", trainerService.getTrainerList());
-//            return "form-update-pelatihan";
-//        }
-
-        else {
-            if(pelatihan.getWaktu_mulai().after(pelatihan.getWaktu_selesai()) || pelatihan.getWaktu_mulai()
-                    .equals(pelatihan.getWaktu_selesai())) {
-                model.addAttribute("failed", "Waktu yang dimasukkan salah");
+        System.out.println(pelatihan.getListPesertaPelatihan());
+        if (pelatihan.getListPesertaPelatihan() != null) {
+            if (pelatihan.getListPesertaPelatihan().size() > pelatihan.getKapasitas()) {
+                model.addAttribute("failed", "Kapasitas tidak boleh kurang dari jumlah peserta terdaftar");
+                model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
+                model.addAttribute("listTrainer", trainerService.getTrainerList());
+                return "gagal";
+            } else {
+                UserModel pengaju = userService.findUser(auth.getName());
+                pelatihan.setUserPengaju(pengaju);
+                pelatihanService.updatePelatihan(pelatihan);
+            }
+        } else {
+            if (pelatihan.getTanggal_mulai().after(pelatihan.getTanggal_selesai())) {
+                model.addAttribute("failed", "Tanggal yang dimasukkan salah");
                 model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
                 model.addAttribute("listTrainer", trainerService.getTrainerList());
                 return "form-update-pelatihan";
             }
             else {
-                UserModel pengaju = userService.findUser(auth.getName());
-                pelatihan.setUserPengaju(pengaju);
-                pelatihanService.updatePelatihan(pelatihan);
+                if(pelatihan.getWaktu_mulai().after(pelatihan.getWaktu_selesai()) || pelatihan.getWaktu_mulai().equals(pelatihan.getWaktu_selesai())) {
+                    model.addAttribute("failed", "Waktu yang dimasukkan salah");
+                    model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
+                    model.addAttribute("listTrainer", trainerService.getTrainerList());
+                    return "form-update-pelatihan";
+                }
+                else {
+                    System.out.println("ah");
+                    UserModel pengaju = userService.findUser(auth.getName());
+                    pelatihan.setUserPengaju(pengaju);
+                    pelatihanService.updatePelatihan(pelatihan);
+                }
             }
         }
         return "berhasil";
     }
-
-    @GetMapping(value = "/tambah-peserta/{id}")
-    private String TambahPesertaFormPage(
-            @PathVariable("id") Integer id,
-            Model model){
-        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
-        int jumlahPesertaTerdaftar = pesertaPelatihanService.getPesertaPelatihanByPelatihan(pelatihan).size();
-        model.addAttribute("pelatihan", pelatihan);
-        model.addAttribute("kapasitas",pelatihan.getKapasitas() - jumlahPesertaTerdaftar);
-        model.addAttribute("peserta", pesertaService.getListPesertaBaru(pelatihan));
-
-        return "form-tambah-peserta-pelatihan";
-    }
-
-//    @PostMapping(value = "/tambah-peserta/{id}", params = "addRow")
-//    private String addPesertaPelatihanSubmit
-//            (@PathVariable("id") Integer id,
-//             @ModelAttribute PesertaPelatihanModel pesertaPelatihan,
-//             final HttpServletRequest req,
-//             Model model){
-//
-//        int rowId = Integer.valueOf(req.getParameter("addRow"));
-//
-//
-//        PesertaModel peserta = pesertaService.getPesertaByID(rowId);
-//        pesertaPelatihan.setPelatihan(pelatihanService.getPelatihanById(id));
-//        pesertaPelatihan.setPeserta(peserta);
-//        pesertaPelatihanService.addPesertaPelatihan(pesertaPelatihan);
-//
-//        return "berhasil";
-//    }
-
-//    @GetMapping(value = "/tambah-peserta/{id}")
-//    private String AssignPesertaFormPage(@PathVariable("id") Integer id, Model model){
-//        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
-//        int jumlahPesertaTerdaftar = pesertaPelatihanService.getPesertaPelatihanByPelatihan(pelatihan).size();
-//
-//        model.addAttribute("pelatihan",pelatihan);
-//        model.addAttribute("kapasitas",pelatihan.getKapasitas() - jumlahPesertaTerdaftar);
-//        model.addAttribute("pesertaList",pesertaService.getListPesertaBaru(pelatihan));
-//
-//        return "form-tambah-peserta-pelatihan";
-//    }
-
-    @PostMapping(value = "/tambah-peserta/{id}")
-    private String addPesertaPelatihanSubmit(@PathVariable("id") Integer idPelatihan , final HttpServletRequest request, Model model){
-        String[] idPesertaList = request.getParameter("idPesertas").split(",");
-        PelatihanModel pelatihan = pelatihanService.getPelatihanById(idPelatihan);
-        pesertaPelatihanService.assignPesertaPelatihan(idPesertaList, pelatihan);
-        model.addAttribute("countAssignedPeserta", idPesertaList.length);
-        model.addAttribute("pelatihan", pelatihan);
-        return "berhasil";
-    }
-
-
 
     @GetMapping("/detail/{id}")
     public String viewDetailPelatihan(
@@ -217,17 +170,6 @@ public class PelatihanController {
 
         return "view-pelatihan";
     }
-
-//    @PostMapping(value = "/tambah-peserta/{id}")
-//    private String addPesertaPelatihanSubmit(@PathVariable("idPelatihan") Integer idPelatihan , final HttpServletRequest request, Model model){
-//        String [] idPesertaList = request.getParameter("listIdPeserta").split(",");
-//        PelatihanModel pelatihan = pelatihanService.getPelatihanById(idPelatihan);
-//        pesertaPelatihanService.assignPesertaPelatihan(idPesertaList, pelatihan);
-//        model.addAttribute("countAssignedPeserta", idPesertaList.length);
-//        model.addAttribute("pelatihan", pelatihan);
-//        return "berhasil";
-//    }
-
 
     @GetMapping("/update-status/{id}")
     public String updateStatusPelatihanForm(
@@ -276,12 +218,35 @@ public class PelatihanController {
         return "berhasil";
     }
 
+    @GetMapping(value = "/tambah-peserta/{id}")
+    private String TambahPesertaFormPage(
+            @PathVariable("id") Integer id,
+            Model model){
+        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
+        int jumlahPesertaTerdaftar = pesertaPelatihanService.getPesertaPelatihanByPelatihan(pelatihan).size();
+        model.addAttribute("pelatihan", pelatihan);
+        model.addAttribute("kapasitas",pelatihan.getKapasitas() - jumlahPesertaTerdaftar);
+        model.addAttribute("peserta", pesertaService.getListPesertaBaru(pelatihan));
+
+        return "form-tambah-peserta-pelatihan";
+    }
+
+    @PostMapping(value = "/tambah-peserta/{id}")
+    private String addPesertaPelatihanSubmit(@PathVariable("id") Integer idPelatihan , final HttpServletRequest request, Model model){
+        String[] idPesertaList = request.getParameter("idPesertas").split(",");
+        PelatihanModel pelatihan = pelatihanService.getPelatihanById(idPelatihan);
+        pesertaPelatihanService.assignPesertaPelatihan(idPesertaList, pelatihan);
+        model.addAttribute("countAssignedPeserta", idPesertaList.length);
+        model.addAttribute("pelatihan", pelatihan);
+        return "berhasil";
+    }
+
     @GetMapping(value = "/tambah-pegawai/{id}")
     private String addPesertaPelatihanFromPegawaiSubmit(@PathVariable("id") Integer id, @ModelAttribute PelatihanModel pelatihanTemp , Model model){
 
         PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
         int numberExistingPeserta = pesertaPelatihanService.getPesertaPelatihanByPelatihan(pelatihan).size();
-//        ListPesertaDetail listPesertaDetail = karyawanRestService.getListPegawai().block();
+
         BaseResponseKaryawan responseKaryawan = karyawanRestService.getListPegawai().block();
         List<Map<String, Object>> listKaryawan = (List<Map<String,Object>>)responseKaryawan.getResult();
         System.out.println(listKaryawan);
