@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface PelatihanDb extends JpaRepository<PelatihanModel, Integer>{
     List<PelatihanModel> findAllByOrderById();
+
+    List<PelatihanModel> findByUserPengaju();
 }

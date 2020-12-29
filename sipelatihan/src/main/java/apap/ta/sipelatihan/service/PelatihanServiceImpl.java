@@ -22,6 +22,11 @@ public class PelatihanServiceImpl implements PelatihanService{
     }
 
     @Override
+    public List<PelatihanModel> getPelatihanListPengaju() {
+        return pelatihanDb.findByUserPengaju();
+    }
+
+    @Override
     public PelatihanModel getPelatihanById(Integer id) {
         return pelatihanDb.findById(id).get();
     }

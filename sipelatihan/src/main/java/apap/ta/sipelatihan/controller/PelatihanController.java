@@ -38,11 +38,18 @@ public class PelatihanController {
     @Autowired
     private PesertaService pesertaService;
 
-    @GetMapping("/viewall")
-    public String listPelatihan(Model model) {
-        List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanList();
-        model.addAttribute("listPelatihan", listPelatihan);
-
+    @GetMapping("/")
+    public String listPelatihan(
+            Authentication auth,
+            Model model) {
+        UserModel user = userService.findUser(auth.getName());
+        if (user.getRole().getId_role() == 1 || user.getRole().getId_role() == 2) {
+            List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanList();
+            model.addAttribute("listPelatihan", listPelatihan);
+        } else {
+            List<PelatihanModel> listPelatihan = pelatihanService.getPelatihanListPengaju();
+            model.addAttribute("listPelatihan", listPelatihan);
+        }
         return "viewall-pelatihan";
     }
 

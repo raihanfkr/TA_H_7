@@ -8,6 +8,8 @@ public interface PelatihanService {
 
     List<PelatihanModel> getPelatihanList();
 
+    List<PelatihanModel> getPelatihanListPengaju();
+
     PelatihanModel getPelatihanById(Integer id);
 
     void addPelatihan(PelatihanModel pelatihan);
