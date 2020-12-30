@@ -34,11 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pelatihan/").hasAnyAuthority("Staff Training", "Kepala Bagian", "Kepala Departemen HR")
                 .antMatchers("/pelatihan/add").hasAnyAuthority("Staff Training", "Kepala Bagian")
                 .antMatchers("/pelatihan/detail/**").hasAnyAuthority("Staff Training", "Kepala Bagian", "Kepala Departemen HR")
-                .antMatchers("/pelatihan/ubah/**").hasAnyAuthority( "Kepala Bagian", "Kepala Departemen HR")
+                .antMatchers("/pelatihan/ubah/**").hasAnyAuthority( "Kepala Bagian", "Staff Training")
                 .antMatchers("/pelatihan/hapus/**").hasAnyAuthority("Staff Training", "Kepala Bagian")
                 .antMatchers("/pelatihan/update-status/**").hasAnyAuthority("Kepala Bagian", "Kepala Departemen HR")
                 .antMatchers("/pelatihan/tambah-peserta/**").hasAnyAuthority("Staff Training", "Kepala Bagian")
                 .antMatchers("/peserta/laporan/**").hasAnyAuthority("Kepala Bagian")
+
 
                 .anyRequest().authenticated()
                 .and()
