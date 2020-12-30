@@ -6,14 +6,17 @@ import apap.ta.sipelatihan.model.PesertaPelatihanModel;
 import apap.ta.sipelatihan.model.UserModel;
 import apap.ta.sipelatihan.repository.PesertaPelatihanDb;
 import apap.ta.sipelatihan.rest.BaseResponseKaryawan;
+import apap.ta.sipelatihan.rest.KaryawanDetail;
+import apap.ta.sipelatihan.rest.ListPesertaDetail;
 import apap.ta.sipelatihan.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -278,7 +281,9 @@ public class PelatihanController {
         List<String> temp = new ArrayList<>();
         List<PesertaPelatihanModel> selected = pelatihan.getListPesertaPelatihan();
 
-        int counter = selected.size();
+        PelatihanModel modelPelatihan = pelatihanService.getPelatihanById(id);
+        int counter = modelPelatihan.getKapasitas();
+
 
         System.out.println(listId);
         String[] idSplit = listId.split(" ");
@@ -298,6 +303,9 @@ public class PelatihanController {
         }
 //        idPesertaList = select.toArray(idPesertaList);
 
+        System.out.println(counter + " counter");
+        System.out.println(idPesertaList.length + " idPesertaList");
+
         if(idPesertaList.length > counter){
             model.addAttribute("msg", "Jumlah peserta yang Anda masukkan melebihi kapasitas pelatihan!");
             return "form-tambah-peserta-pelatihan";
@@ -310,8 +318,6 @@ public class PelatihanController {
         model.addAttribute("countAssignedPeserta", idPesertaList.length);
         model.addAttribute("pelatihan", pelatihan);
         return "berhasil";
-
-
     }
 
     List<PesertaPelatihanModel> tempPesertaPelatihan = new ArrayList<>();
