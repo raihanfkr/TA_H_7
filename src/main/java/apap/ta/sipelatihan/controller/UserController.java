@@ -68,7 +68,6 @@ public class UserController {
         } catch (WebClientException webClientException){ }
         model.addAttribute("username", user.getUsername());
         model.addAttribute("role", role.getNama_role());
-//        model.addAttribute("dateTime", LocalDateTime.now());
 
         return "profil-user";
     }

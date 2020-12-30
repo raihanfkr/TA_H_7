@@ -48,6 +48,7 @@ public class PesertaController {
         laporanRestService.postLaporan(laporan);
         model.addAttribute("username", laporan.getUsername());
         model.addAttribute("jumlahTraining", laporan.getJumlahTraining());
+        model.addAttribute("msg", "Laporan berhasil dibuat!");
         return "berhasil";
     }
 

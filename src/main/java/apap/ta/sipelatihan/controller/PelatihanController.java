@@ -97,6 +97,7 @@ public class PelatihanController {
                 pelatihanService.addPelatihan(pelatihan);
             }
         }
+        model.addAttribute("msg", "Pelatihan berhasil ditambahkan");
         return "berhasil";
     }
 
@@ -157,6 +158,7 @@ public class PelatihanController {
                 }
             }
         }
+        model.addAttribute("msg", "Pelatihan berhasil diubah!");
         return "berhasil";
     }
 
@@ -223,6 +225,7 @@ public class PelatihanController {
         }else{
             pelatihanService.deletePelatihan(id);
         }
+        model.addAttribute("msg", "Pelatihan berhasil dihapus");
         return "berhasil";
     }
 
@@ -258,25 +261,12 @@ public class PelatihanController {
         model.addAttribute("pelatihan", pelatihan);
         model.addAttribute("temp", temp);
         model.addAttribute("kapasitas",pelatihan.getKapasitas() - jumlahPesertaTerdaftar);
-//        model.addAttribute("peserta", pesertaService.getListPesertaBaru(pelatihan));
 
         return "form-tambah-peserta-pelatihan";
     }
 
-//    @PostMapping(value = "/tambah-peserta/{id}")
-//    private String addPesertaPelatihanSubmit(@PathVariable("id") Integer id , final HttpServletRequest request, Model model){
-//        String[] idPesertaList = request.getParameter("idPesertas").split(",");
-//        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
-//        pesertaPelatihanService.assignPesertaPelatihan(idPesertaList, pelatihan);
-//
-//        model.addAttribute("countAssignedPeserta", idPesertaList.length);
-//        model.addAttribute("pelatihan", pelatihan);
-//        return "berhasil";
-//    }
-
     @PostMapping(value = "/tambah-peserta/{id}")
     private String addPesertaPelatihanSubmit(@PathVariable("id") Integer id, @ModelAttribute PelatihanModel pelatihan, String listId, Model model){
-//        String[] idPesertaList = request.getParameter("idPesertas").split(",");
         System.out.println(pelatihan.getListPesertaPelatihan());
         List<String> temp = new ArrayList<>();
         List<PesertaPelatihanModel> selected = pelatihan.getListPesertaPelatihan();
@@ -301,7 +291,6 @@ public class PelatihanController {
         for(int a = 0; a < temp.size(); a++){
             idPesertaList[a] = String.valueOf(temp.get(a));
         }
-//        idPesertaList = select.toArray(idPesertaList);
 
         System.out.println(counter + " counter");
         System.out.println(idPesertaList.length + " idPesertaList");
@@ -317,6 +306,7 @@ public class PelatihanController {
 
         model.addAttribute("countAssignedPeserta", idPesertaList.length);
         model.addAttribute("pelatihan", pelatihan);
+        model.addAttribute("msg", "Peserta berhasil ditambahkan!");
         return "berhasil";
     }
 
