@@ -308,7 +308,7 @@ public class PelatihanController {
 
         if(idPesertaList.length > counter){
             model.addAttribute("msg", "Jumlah peserta yang Anda masukkan melebihi kapasitas pelatihan!");
-            return "form-tambah-peserta-pelatihan";
+            return "gagal";
         }
         else{
             PelatihanModel pelatihanReal = pelatihanService.getPelatihanById(id);
