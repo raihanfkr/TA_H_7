@@ -27,9 +27,9 @@ public class PesertaPelatihanServiceImpl implements PesertaPelatihanService{
     }
 
     @Override
-    public void addPesertaPelatihan(PesertaPelatihanModel pesertaPelatihan) {
-        generateNomorPeserta(pesertaPelatihan , pesertaPelatihan.getPelatihan().getId(), pesertaPelatihan.getPeserta().getId());
-        pesertaPelatihanDb.save(pesertaPelatihan);
+    public PesertaPelatihanModel addPesertaPelatihan(PesertaPelatihanModel pesertaPelatihan) {
+        generateNomorPeserta(pesertaPelatihan, pesertaPelatihan.getPelatihan().getId(), pesertaPelatihan.getPeserta().getId());
+        return pesertaPelatihanDb.save(pesertaPelatihan);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class PesertaPelatihanServiceImpl implements PesertaPelatihanService{
     public void assignPesertaPelatihan(String[] kumpulanId, PelatihanModel pelatihanModel) {
 
         for(String id : kumpulanId){
-
             PesertaPelatihanModel pesertaPelatihan = new PesertaPelatihanModel();
             PesertaModel peserta = pesertaService.getPesertaByID(Integer.parseInt(id));
+            System.out.println(peserta.getNama());
             pesertaPelatihan.setPelatihan(pelatihanModel);
             pesertaPelatihan.setPeserta(peserta);
             this.addPesertaPelatihan(pesertaPelatihan);
@@ -97,5 +97,15 @@ public class PesertaPelatihanServiceImpl implements PesertaPelatihanService{
 
     public List<PesertaPelatihanModel> getPesertaPelatihanByPeserta(PesertaModel peserta){
         return pesertaPelatihanDb.findPesertaPelatihanModelByPeserta(peserta);
+    }
+
+    @Override
+    public void deletePesertaPelatihan(PesertaPelatihanModel a) {
+        pesertaPelatihanDb.delete(a);
+    }
+
+    @Override
+    public PesertaPelatihanModel getPesertaPelatihanById(Long id) {
+        return pesertaPelatihanDb.findById(id).get();
     }
 }

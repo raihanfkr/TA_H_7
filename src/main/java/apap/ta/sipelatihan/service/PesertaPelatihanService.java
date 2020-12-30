@@ -10,7 +10,7 @@ public interface PesertaPelatihanService {
 
     PesertaPelatihanModel updatePesertaPelatihan(PesertaPelatihanModel pesertaPelatihan);
 
-    void addPesertaPelatihan(PesertaPelatihanModel pesertaPelatihan);
+    PesertaPelatihanModel addPesertaPelatihan(PesertaPelatihanModel pesertaPelatihan);
 
     void generateNomorPeserta(PesertaPelatihanModel pesertaPelatihan, Integer idPelatihan, Integer idPeserta);
 
@@ -21,4 +21,9 @@ public interface PesertaPelatihanService {
     void assignPesertaPelatihanFromPegawai(List<Map<String, Object>> listPesertaDetail, PelatihanModel pelatihanModel);
 
     List<PesertaPelatihanModel> getPesertaPelatihanByPeserta(PesertaModel peserta);
+
+    void deletePesertaPelatihan(PesertaPelatihanModel a);
+
+    PesertaPelatihanModel getPesertaPelatihanById(Long id);
+
 }

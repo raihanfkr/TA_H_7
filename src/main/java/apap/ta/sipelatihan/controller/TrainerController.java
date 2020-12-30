@@ -1,22 +1,14 @@
 package apap.ta.sipelatihan.controller;
 
-import apap.ta.sipelatihan.model.JenisPelatihanModel;
-import apap.ta.sipelatihan.model.PelatihanModel;
-import apap.ta.sipelatihan.model.PesertaModel;
-import apap.ta.sipelatihan.model.PesertaPelatihanModel;
-import apap.ta.sipelatihan.model.RoleModel;
 import apap.ta.sipelatihan.model.TrainerModel;
-import apap.ta.sipelatihan.model.UserModel;
 import apap.ta.sipelatihan.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Controller
 public class TrainerController {
@@ -82,16 +74,19 @@ public class TrainerController {
             String noKtp, String nama_trainer,
             Model model
     ){
+        model.addAttribute("trainer", trainer);
         try{
-            if (!(nama_trainer.equals(trainer.getNama_trainer()))) {
-                String exist_ktp = trainerService.checkTrainer(noKtp).getNoKtp();
-                if (noKtp.equals(exist_ktp)) {
-                    model.addAttribute("msg", "Trainer gagal diubah, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
-                    model.addAttribute("trainer", trainer);
-                    return "form-update-trainer";
+            List<TrainerModel> listTrainer = trainerService.getTrainerList();
+            for(TrainerModel a : listTrainer){
+                String exist_ktp = a.getNoKtp();
+                if (!(nama_trainer.equals(a.getNama_trainer()))) {
+                    if (noKtp.equals(exist_ktp)){
+                        model.addAttribute("msg", "Penambahan Trainer gagal, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
+                        return "form-update-trainer";
+                    }
+                }else {
+                    trainerService.updateTrainer(trainer);
                 }
-            }else {
-                trainerService.updateTrainer(trainer);
             }
         } catch (NoSuchElementException e){
             trainerService.updateTrainer(trainer);

@@ -4,18 +4,16 @@ import apap.ta.sipelatihan.model.PelatihanModel;
 import apap.ta.sipelatihan.model.PesertaModel;
 import apap.ta.sipelatihan.model.PesertaPelatihanModel;
 import apap.ta.sipelatihan.model.UserModel;
+import apap.ta.sipelatihan.repository.PesertaPelatihanDb;
 import apap.ta.sipelatihan.rest.BaseResponseKaryawan;
-import apap.ta.sipelatihan.rest.KaryawanDetail;
-import apap.ta.sipelatihan.rest.ListPesertaDetail;
 import apap.ta.sipelatihan.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +41,9 @@ public class PelatihanController {
 
     @Autowired
     private KaryawanRestService karyawanRestService;
+
+    @Autowired
+    private PesertaPelatihanDb pesertaPelatihanDb;
 
     @GetMapping("/")
     public String listPelatihan(
@@ -115,13 +116,16 @@ public class PelatihanController {
             Authentication auth,
             Model model
     ) {
-        System.out.println(pelatihan.getListPesertaPelatihan());
-        if (pelatihan.getListPesertaPelatihan() != null) {
-            if (pelatihan.getListPesertaPelatihan().size() > pelatihan.getKapasitas()) {
+        PelatihanModel p = pelatihanService.getPelatihanById(id);
+        List<PesertaPelatihanModel> listPesertaPelatihan = p.getListPesertaPelatihan();
+        System.out.println(listPesertaPelatihan.size());
+
+        if (listPesertaPelatihan != null) {
+            if (listPesertaPelatihan.size() > pelatihan.getKapasitas()) {
                 model.addAttribute("failed", "Kapasitas tidak boleh kurang dari jumlah peserta terdaftar");
                 model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
                 model.addAttribute("listTrainer", trainerService.getTrainerList());
-                return "gagal";
+                return "form-update-pelatihan";
             } else {
                 UserModel pengaju = userService.findUser(auth.getName());
                 pelatihan.setUserPengaju(pengaju);
@@ -135,7 +139,8 @@ public class PelatihanController {
                 return "form-update-pelatihan";
             }
             else {
-                if(pelatihan.getWaktu_mulai().after(pelatihan.getWaktu_selesai()) || pelatihan.getWaktu_mulai().equals(pelatihan.getWaktu_selesai())) {
+                if(pelatihan.getWaktu_mulai().after(pelatihan.getWaktu_selesai()) || pelatihan.getWaktu_mulai()
+                        .equals(pelatihan.getWaktu_selesai())) {
                     model.addAttribute("failed", "Waktu yang dimasukkan salah");
                     model.addAttribute("listJenisPelatihan", jenisPelatihanService.getJenisPelatihanList());
                     model.addAttribute("listTrainer", trainerService.getTrainerList());
@@ -222,24 +227,94 @@ public class PelatihanController {
     private String TambahPesertaFormPage(
             @PathVariable("id") Integer id,
             Model model){
+
+        PelatihanModel pelatihanModel = new PelatihanModel();
         PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
+
+        List<PesertaModel> pesertaBaru = pesertaService.getListPesertaBaru(pelatihan);
+
+        List<PesertaPelatihanModel> temp = new ArrayList<>();
+        String listId = "";
+        for(PesertaModel a : pesertaBaru){
+            PesertaPelatihanModel dummy = new PesertaPelatihanModel();
+            dummy.setPeserta(a);
+            dummy.setNo_peserta("fikriansyah");
+            dummy.setPelatihan(pelatihan);
+
+            PesertaPelatihanModel p = pesertaPelatihanService.addPesertaPelatihan(dummy);
+
+            temp.add(p);
+            listId = listId + p.getId() + " ";
+        }
+
+        System.out.println(listId);
+        pelatihan.getListPesertaPelatihan().clear();
+        model.addAttribute("listId", listId);
+
         int jumlahPesertaTerdaftar = pesertaPelatihanService.getPesertaPelatihanByPelatihan(pelatihan).size();
         model.addAttribute("pelatihan", pelatihan);
+        model.addAttribute("temp", temp);
         model.addAttribute("kapasitas",pelatihan.getKapasitas() - jumlahPesertaTerdaftar);
-        model.addAttribute("peserta", pesertaService.getListPesertaBaru(pelatihan));
+//        model.addAttribute("peserta", pesertaService.getListPesertaBaru(pelatihan));
 
         return "form-tambah-peserta-pelatihan";
     }
 
+//    @PostMapping(value = "/tambah-peserta/{id}")
+//    private String addPesertaPelatihanSubmit(@PathVariable("id") Integer id , final HttpServletRequest request, Model model){
+//        String[] idPesertaList = request.getParameter("idPesertas").split(",");
+//        PelatihanModel pelatihan = pelatihanService.getPelatihanById(id);
+//        pesertaPelatihanService.assignPesertaPelatihan(idPesertaList, pelatihan);
+//
+//        model.addAttribute("countAssignedPeserta", idPesertaList.length);
+//        model.addAttribute("pelatihan", pelatihan);
+//        return "berhasil";
+//    }
+
     @PostMapping(value = "/tambah-peserta/{id}")
-    private String addPesertaPelatihanSubmit(@PathVariable("id") Integer idPelatihan , final HttpServletRequest request, Model model){
-        String[] idPesertaList = request.getParameter("idPesertas").split(",");
-        PelatihanModel pelatihan = pelatihanService.getPelatihanById(idPelatihan);
-        pesertaPelatihanService.assignPesertaPelatihan(idPesertaList, pelatihan);
+    private String addPesertaPelatihanSubmit(@PathVariable("id") Integer id, @ModelAttribute PelatihanModel pelatihan, String listId, Model model){
+//        String[] idPesertaList = request.getParameter("idPesertas").split(",");
+        System.out.println(pelatihan.getListPesertaPelatihan());
+        List<String> temp = new ArrayList<>();
+        List<PesertaPelatihanModel> selected = pelatihan.getListPesertaPelatihan();
+
+        int counter = selected.size();
+
+        System.out.println(listId);
+        String[] idSplit = listId.split(" ");
+        for(int a=0; a<idSplit.length; a++){
+            Long num = Long.valueOf(idSplit[a]);
+            pesertaPelatihanService.deletePesertaPelatihan(pesertaPelatihanService.getPesertaPelatihanById(num));
+        }
+
+        for(PesertaPelatihanModel p : selected) {
+            temp.add(String.valueOf(p.getPeserta().getId()));
+            System.out.println(p.getId());
+        }
+
+        String[] idPesertaList = new String[temp.size()];
+        for(int a = 0; a < temp.size(); a++){
+            idPesertaList[a] = String.valueOf(temp.get(a));
+        }
+//        idPesertaList = select.toArray(idPesertaList);
+
+        if(idPesertaList.length > counter){
+            model.addAttribute("msg", "Jumlah peserta yang Anda masukkan melebihi kapasitas pelatihan!");
+            return "form-tambah-peserta-pelatihan";
+        }
+        else{
+            PelatihanModel pelatihanReal = pelatihanService.getPelatihanById(id);
+            pesertaPelatihanService.assignPesertaPelatihan(idPesertaList, pelatihanReal);
+        }
+
         model.addAttribute("countAssignedPeserta", idPesertaList.length);
         model.addAttribute("pelatihan", pelatihan);
         return "berhasil";
+
+
     }
+
+    List<PesertaPelatihanModel> tempPesertaPelatihan = new ArrayList<>();
 
     @GetMapping(value = "/tambah-pegawai/{id}")
     private String addPesertaPelatihanFromPegawaiSubmit(@PathVariable("id") Integer id, @ModelAttribute PelatihanModel pelatihanTemp , Model model){

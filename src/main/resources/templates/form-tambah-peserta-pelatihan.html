@@ -38,11 +38,12 @@
                         <div class="card shadow mb-4">
                             <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-dark">Daftar Seluruh Pelatihan</h6>
-                                <h6 class="m-0 text-success" th:text="${msg}"></h6>
+                                <!--                                <h6 class="m-0 text-success" th:text="${msg}"></h6>-->
+                                <h6 class="m-0 text-danger" th:text="${msg}"></h6>
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/pelatihan/tambah-peserta/} + ${pelatihan.id}" method="post">
-
+                                <form th:action="@{/pelatihan/tambah-peserta/} + ${pelatihan.id}" method="post" th:object="${pelatihan}">
+                                    <input th:value="${listId}" name="listId" hidden></input>
                                     <table class="table">
                                         <thead>
                                         <tr>
@@ -55,15 +56,16 @@
                                         </thead>
                                         <tbody>
 
-                                        <tr th:each="p, iterationStatus: ${peserta}">
-                                            <th th:text="${p.nama}" class="font-weight-normal"></th>
-                                            <th th:text="${p.no_telepon}" class="font-weight-normal"></th>
-                                            <th th:text="${p.alamat}" class="font-weight-normal"></th>
-                                            <th th:text="${p.departemen}" class="font-weight-normal"></th>
+                                        <tr th:each="p, iterationStatus: ${pelatihan.listPesertaPelatihan}">
+                                            <th th:text="${p.peserta.nama}" class="font-weight-normal"></th>
+                                            <th th:text="${p.peserta.no_telepon}" class="font-weight-normal"></th>
+                                            <th th:text="${p.peserta.alamat}" class="font-weight-normal"></th>
+                                            <th th:text="${p.peserta.departemen}" class="font-weight-normal"></th>
                                             <th th:if="${pelatihan.kapasitas} != 0" class="font-weight-normal">
                                                 <div class="form-check">
-<!--                                                    <select th:each="row, rowStat: ${peserta}" th:field="*{peserta[__${rowStat.index}__].id}" class="form-control"></select>-->
-                                                    <input name="idPesertas" type="checkbox" class="form-check-input" th:value="${p.id}">
+                                                    <!--                                                    <select th:each="row, rowStat: ${peserta}" th:field="*{peserta[__${rowStat.index}__].id}" class="form-control"></select>-->
+                                                    <input th:field="*{listPesertaPelatihan}" type="checkbox" class="form-check-input" th:value="${p.id}">
+
                                                 </div>
                                             </th>
                                         </tr>
@@ -71,7 +73,7 @@
                                     </table>
                                     <div class="d-flex justify-content-center" th:if="${pelatihan.kapasitas} > 0">
                                         <button class="btn btn-md m-3 btn-dark" type="submit" id="assign-peserta">Tambah Peserta</button>
-<!--                                        <a class="btn btn-secondary btn-md- m-3" th:href="@{/pelatihan/detail(idPelatihan=${pelatihan.idPelatihan})}">Batal</a>-->
+                                        <!--                                        <a class="btn btn-secondary btn-md- m-3" th:href="@{/pelatihan/detail(idPelatihan=${pelatihan.idPelatihan})}">Batal</a>-->
                                     </div>
                                 </form>
                             </div>

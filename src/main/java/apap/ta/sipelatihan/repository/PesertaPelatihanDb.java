@@ -14,4 +14,6 @@ public interface PesertaPelatihanDb extends JpaRepository<PesertaPelatihanModel,
     List<PesertaPelatihanModel> findPesertaPelatihanModelByPelatihan(PelatihanModel pelatihanModel);
 
     List<PesertaPelatihanModel> findPesertaPelatihanModelByPeserta(PesertaModel pesertaModel);
+
+    Optional<PesertaPelatihanModel> findById(Integer id);
 }
