@@ -7,10 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BaseResponse {
+public class BaseResponsePelatihan {
     private int status;
     private String message;
-    private PegawaiDTO result;
+    private PelatihanModel result;
+
+    public PelatihanModel getResult() {
+        return result;
+    }
+
+    public void setResult(PelatihanModel result) {
+        this.result = result;
+    }
 
     /**
      * @return the status
@@ -24,12 +32,6 @@ public class BaseResponse {
     public String getMessage() {
         return message;
     }
-    /**
-     * @return the result
-     */
-    public PegawaiDTO getResult() {
-        return result;
-    }
 
     /**
      * @param status the status to set
@@ -42,11 +44,5 @@ public class BaseResponse {
      */
     public void setMessage(String message) {
         this.message = message;
-    }
-    /**
-     * @param result the result to set
-     */
-    public void setResult(PegawaiDTO result) {
-        this.result = result;
     }
 }

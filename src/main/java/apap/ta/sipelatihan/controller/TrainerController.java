@@ -44,14 +44,22 @@ public class TrainerController {
                                    Model model
     ) {
         try{
-            String exist_ktp = trainerService.checkTrainer(noKtp).getNoKtp();
-            if (noKtp.equals(exist_ktp)){
-                model.addAttribute("msg", "Penambahan Trainer gagal, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
-                return "form-add-trainer";
+//            String exist_ktp = trainerService.checkTrainer(noKtp).getNoKtp();
+            List<TrainerModel> listTrainer = trainerService.getTrainerList();
+            for(TrainerModel a : listTrainer){
+                String exist_ktp = a.getNoKtp();
+                if (noKtp.equals(exist_ktp)){
+                    model.addAttribute("msg", "Penambahan Trainer gagal, karena Trainer dengan no ktp tersebut sudah terdaftar di Database!");
+                    return "form-add-trainer";
+                }
             }
-        } catch (NoSuchElementException e){
-            trainerService.addTrainer(trainer);
         }
+
+        catch (NoSuchElementException e){
+        }
+
+        trainerService.addTrainer(trainer);
+
         model.addAttribute("msg", "Trainer berhasil ditambahkan ke database!");
         model.addAttribute("listTrainer", trainerService.getTrainerList());
         return "berhasil";

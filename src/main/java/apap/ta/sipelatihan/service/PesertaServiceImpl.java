@@ -38,6 +38,11 @@ public class PesertaServiceImpl implements PesertaService {
     }
 
     @Override
+    public PesertaModel getPesertaByNamaPeserta(String nama) {
+        return pesertaDb.findByNama(nama);
+    }
+
+    @Override
     public List<PesertaModel> getListPesertaBaru(PelatihanModel pelatihan) {
         List<String> namaPeserta = new ArrayList<>();
         List<PesertaPelatihanModel> pesertaPelatihan = pesertaPelatihanService.getPesertaPelatihanByPelatihan(pelatihan);

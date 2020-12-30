@@ -20,55 +20,55 @@
             <nav th:replace="fragments/fragment :: navbar"></nav>
             <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Ubah Trainer</h1>
-                    </div>
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Ubah Trainer</h1>
+                </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="card shadow mb-4">
-                                <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Form Ubah Trainer</h6>
-                                    <h6 class="m-0 text-danger" th:text="${msg}"></h6>
-                                </div>
-                                <div class="card-body">
-                                    <form action="/trainer/ubah" th:object="${trainer}" method="POST">
-                                        <input type="hidden" th:field="*{id}"/>
-                                        Nama<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="nama_trainer"
-                                               th:value="*{nama_trainer}"/>
-                                        No KTP<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="noKtp"
-                                               th:value="*{noKtp}"/>
-                                        No Telepon<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="no_telepon"
-                                               th:value="*{no_telepon}"/>
-                                        Email<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="email"
-                                               th:value="*{email}"/>
-                                        <br>
-                                        <button type="submit" value="Submit" class="btn btn-dark mx-auto">Submit</button>
-                                    </form>
-                                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card shadow mb-4">
+                            <div class="text center card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-dark">Form Ubah Trainer</h6>
+                                <h6 class="m-0 text-danger" th:text="${msg}"></h6>
+                            </div>
+                            <div class="card-body">
+                                <form action="/trainer/ubah" th:object="${trainer}" method="POST">
+                                    <input type="hidden" th:field="*{id}"/>
+                                    Nama<br>
+                                    <input class="form-control mb-3 mt-1" type="text" name="nama_trainer"
+                                           th:value="*{nama_trainer}" required/>
+                                    No KTP<br>
+                                    <input class="form-control mb-3 mt-1" type="number" name="noKtp"
+                                           th:value="*{noKtp}" required/>
+                                    No Telepon<br>
+                                    <input class="form-control mb-3 mt-1" type="number" name="no_telepon"
+                                           th:value="*{no_telepon}" required/>
+                                    Email<br>
+                                    <input class="form-control mb-3 mt-1" type="text" name="email"
+                                           th:value="*{email}" required/>
+                                    <br>
+                                    <button type="submit" value="Submit" class="btn btn-dark mx-auto">Submit</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer th:replace="fragments/fragment :: footer"></footer>
-            <!-- End of Footer -->
+            </div>
         </div>
         <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:replace="fragments/fragment :: footer"></footer>
+        <!-- End of Footer -->
     </div>
-    <div th:replace="fragments/fragment :: logout"></div>
-    </div>
+    <!-- End of Main Content -->
+</div>
+<div th:replace="fragments/fragment :: logout"></div>
+</div>
 </body>
 </html>

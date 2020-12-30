@@ -39,16 +39,16 @@
                                 <form th:action="@{/trainer/add}" th:object="${trainer}" method="POST">
                                     Nama<br>
                                     <input class="form-control mb-3 mt-1" type="text" name="nama_trainer"
-                                           placeholder="e.g. Bright Vachirawit"/>
+                                           placeholder="e.g. Bright Vachirawit" required/>
                                     No KTP<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="noKtp"
-                                           placeholder="e.g. 3306124403910302"/>
+                                    <input class="form-control mb-3 mt-1" type="number" name="noKtp"
+                                           placeholder="e.g. 3306124403910302" required/>
                                     No Telepon<br>
-                                    <input class="form-control mb-3 mt-1" type="text" name="no_telepon"
-                                           placeholder="e.g. 081123456789"/>
+                                    <input class="form-control mb-3 mt-1" type="number" name="no_telepon"
+                                           placeholder="e.g. 081123456789" required/>
                                     Email<br>
                                     <input class="form-control mb-3 mt-1" type="text" name="email"
-                                           placeholder="e.g. bbrightvc@gmail.com"/>
+                                           placeholder="e.g. bbrightvc@gmail.com" required/>
                                     <br>
                                     <button type="submit" value="Submit" class="btn btn-dark mx-auto">Submit</button>
                                 </form>

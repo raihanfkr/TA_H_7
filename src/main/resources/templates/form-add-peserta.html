@@ -41,15 +41,15 @@
                                     <form th:action="@{/peserta/add}" th:object="${peserta}" method="POST">
                                         Nama<br>
                                         <input class="form-control mb-3 mt-1" type="text" name="nama"
-                                               placeholder="e.g. Kim Seon Ho"/>
+                                               placeholder="e.g. Kim Seon Ho" required/>
                                         <br>
                                         Nomor Telepon<br>
-                                        <input class="form-control mb-3 mt-1" type="text" name="no_telepon"
-                                               placeholder="e.g. 081110101010"/>
+                                        <input class="form-control mb-3 mt-1" type="number" name="no_telepon"
+                                               placeholder="e.g. 081110101010" required/>
                                         <br>
                                         Alamat<br>
                                         <input class="form-control mb-3 mt-1" type="text" name="alamat"
-                                               placeholder="e.g. Jalan Tebet Selatan Barat Daya"/>
+                                               placeholder="e.g. Jalan Tebet Selatan Barat Daya" required/>
                                         <br>
                                         Departemen<br>
                                         <select class="form-control mb-3 mt-1" name="departemen">

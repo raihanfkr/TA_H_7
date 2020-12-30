@@ -14,6 +14,8 @@ public interface PesertaService {
 
     PesertaModel getPesertaByID(Integer id);
 
+    PesertaModel getPesertaByNamaPeserta(String nama);
+
     List<PesertaModel> getListPesertaBaru(PelatihanModel pelatihan);
 
     List<PesertaModel> getPesertaTerdaftar(PelatihanModel pelatihan);
